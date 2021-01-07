@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CodewarsKataExporter\Schemas;
 
 use Garden\Schema\RefNotFoundException;
