@@ -5,6 +5,7 @@
   "scripts": {
     "test": "phpunit tests --testdox --configuration phpunit.xml",
     "test:watch": "phpunit-watcher watch tests --testdox --configuration phpunit.xml",
+    "generate:autoload": "composer dump-autoload -o",
     "start": "php index.php"
   },
   "require": {
