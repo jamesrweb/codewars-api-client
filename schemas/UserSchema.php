@@ -11,7 +11,7 @@ use Garden\Schema\Schema;
  */
 class UserSchema
 {
-    public array $data = [];
+    private array $data = [];
 
     /**
      * UserSchema constructor
@@ -27,7 +27,7 @@ class UserSchema
      *
      * @return Schema
      */
-    public function getSchema(): Schema
+    private function getSchema(): Schema
     {
         return Schema::parse([
             "username:string",
