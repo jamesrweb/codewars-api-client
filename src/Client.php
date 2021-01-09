@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class Client
- * @package App
+ * @package CodewarsKataExporter
  */
 final class Client
 {
