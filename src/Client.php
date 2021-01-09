@@ -68,8 +68,18 @@ class Client
      */
     public function getUser(): array
     {
-        if (empty($this->username)) throw new ValueError("Username must be set");
-        $response = $this->client->request("GET", $this->base_url . "/$this->username");
+        if (empty($this->username)) {
+            throw new ValueError("Username must be set");
+        }
+        $response = $this->client->request("GET", "$this->base_url/$this->username");
+        return $response->toArray();
+    }
+
+    public function getUserCompletedChallenges() {
+        if(empty($this->username)) {
+            throw new ValueError("Username must be set");
+        }
+        $response = $this->client->request("GET", "$this->base_url/$this->username/code-challenges/completed");
         return $response->toArray();
     }
 }

@@ -57,4 +57,24 @@ final class ClientTest extends TestCase
         $user_schema = new Schemas\UserSchema($response);
         $this->assertEquals(true, $user_schema->validate());
     }
+
+    public function testGetUserCompletedChallengesThrowsWhenNoUsernameSet() {
+        $this->expectException(ValueError::class);
+        $this->client->getUserCompletedChallenges();
+    }
+
+    public function testGetUserCompletedChallengesThrowsWhenInvalidUserProvided() {
+        $this->expectException(ClientException::class);
+        $this->expectExceptionCode(404);
+        $this->client->setUsername("user");
+        $this->client->getUserCompletedChallenges();
+    }
+
+    public function testGetUserCompletedChallengesReturnsCorrectResponseWithValidUsernameProvided()
+    {
+        $this->client->setUsername("jamesrweb");
+        $response = $this->client->getUserCompletedChallenges();
+        $completed_challenges_schema = new Schemas\CompletedChallengesSchema($response);
+        $this->assertEquals(true, $completed_challenges_schema->validate());
+    }
 }
