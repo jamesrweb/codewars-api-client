@@ -13,7 +13,7 @@ use Garden\Schema\Schema;
  */
 class UserSchema
 {
-    private array $data = [];
+    private array $data;
 
     /**
      * UserSchema constructor
