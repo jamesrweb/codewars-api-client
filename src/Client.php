@@ -50,6 +50,42 @@ final class Client
     }
 
     /**
+     * A recursive helper to get all completed challenge solutions accounting for pagination
+     *
+     * @param int $page
+     * @param array $output
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    private function completedChallengesHelper(int $page, array $output): array
+    {
+        $response = $this->client->request("GET", "$this->base_url/code-challenges/completed?page=" . $page - 1);
+        $response_array = $response->toArray();
+
+        if (count($output) === 0) $output = array_merge($output, $response_array);
+
+        if ($page - 1 < $response_array["totalPages"]) {
+            $a = array_map("serialize", $output["data"]);
+            $b = array_map("serialize", $response_array["data"]);
+            $differences = array_diff($a, $b);
+
+            if (count($differences) > 0) {
+                foreach ($response_array["data"] as $item) {
+                    $output["data"][] = $item;
+                }
+            }
+
+            return $this->completedChallengesHelper($page + 1, $output);
+        }
+
+        return $output;
+    }
+
+    /**
      * Get the completed challenges of the user
      *
      * @return array
@@ -59,10 +95,9 @@ final class Client
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function completedChallenges()
+    public function completedChallenges(): array
     {
-        $response = $this->client->request("GET", "$this->base_url/code-challenges/completed");
-        return $response->toArray();
+        return $this->completedChallengesHelper(1, []);
     }
 
     /**
@@ -75,7 +110,7 @@ final class Client
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function authoredChallenges()
+    public function authoredChallenges(): array
     {
         $response = $this->client->request("GET", "$this->base_url/code-challenges/authored");
         return $response->toArray();
