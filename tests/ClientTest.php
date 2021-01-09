@@ -52,4 +52,16 @@ final class ClientTest extends TestCase
 
         $this->assertEquals(true, $completed_challenges_schema->validate());
     }
+
+    public function testAuthoredChallengesHappyPath()
+    {
+        $http_client = HttpClient::create();
+        $client_options = new ClientOptions("jamesrweb");
+        $client = new Client($http_client, $client_options);
+
+        $response = $client->authoredChallenges();
+        $completed_challenges_schema = new Schemas\AuthoredChallengesSchema($response);
+
+        $this->assertEquals(true, $completed_challenges_schema->validate());
+    }
 }

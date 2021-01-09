@@ -34,7 +34,7 @@ final class Client
     }
 
     /**
-     * Get an overview of a user
+     * Get an overview of the user
      *
      * @return array
      * @throws ClientExceptionInterface
@@ -50,7 +50,7 @@ final class Client
     }
 
     /**
-     * Get the completed challenges of a user
+     * Get the completed challenges of the user
      *
      * @return array
      * @throws ClientExceptionInterface
@@ -62,6 +62,22 @@ final class Client
     public function completedChallenges()
     {
         $response = $this->client->request("GET", "$this->base_url/code-challenges/completed");
+        return $response->toArray();
+    }
+
+    /**
+     * Get the challenges that the user authored
+     *
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function authoredChallenges()
+    {
+        $response = $this->client->request("GET", "$this->base_url/code-challenges/authored");
         return $response->toArray();
     }
 }

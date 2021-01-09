@@ -8,15 +8,15 @@ use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 
 /**
- * Class UserSchema
+ * Class AuthoredChallengesSchema
  * @package CodewarsKataExporter\Schemas
  */
-class UserSchema
+class AuthoredChallengesSchema
 {
     private array $data;
 
     /**
-     * UserSchema constructor
+     * AuthoredChallengesSchema constructor
      *
      * @param array $data
      */
@@ -33,22 +33,15 @@ class UserSchema
     private function getSchema(): Schema
     {
         return Schema::parse([
-            "username:string",
-            "name:string",
-            "honor:int",
-            "clan:string?",
-            "leaderboardPosition:int",
-            "skills:array" => "string",
-            "ranks:object" => [
-                "overall:object" => [
-                    "rank:int",
-                    "name:string",
-                    "color:string",
-                    "score:int"
-                ],
-                "languages:object" => "object"
-            ],
-            "codeChallenges:object"
+            "data:array" => [
+                "id:string",
+                "name:string",
+                "description:string",
+                "rank:int",
+                "rankName:string",
+                "tags:array" => "string",
+                "languages:array" => "string"
+            ]
         ]);
     }
 

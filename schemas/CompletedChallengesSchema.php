@@ -17,6 +17,7 @@ class CompletedChallengesSchema
 
     /**
      * CompletedChallengesSchema constructor
+     *
      * @param array $data
      */
     public function __construct(array $data)
@@ -38,7 +39,7 @@ class CompletedChallengesSchema
                 "id:string",
                 "name:string",
                 "slug:string",
-                "completedAt:string",
+                "completedAt:dt",
                 "completedLanguages:array" => "string"
             ]
         ]);
