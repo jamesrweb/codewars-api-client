@@ -10,19 +10,19 @@
     }
   ],
   "scripts": {
-    "test": "phpunit tests --testdox --configuration phpunit.xml",
-    "test:watch": "phpunit-watcher watch tests --testdox --configuration phpunit.xml",
     "generate:autoload": "composer dump-autoload -o",
-    "start": "php index.php"
+    "start": "php index.php",
+    "test": "phpunit tests --testdox --configuration phpunit.xml",
+    "test:watch": "phpunit-watcher watch tests --testdox --configuration phpunit.xml"
   },
   "minimum-stability": "stable",
   "require": {
-    "symfony/dotenv": "^5.2",
     "symfony/http-client": "^5.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
     "spatie/phpunit-watcher": "^1.23",
+    "symfony/dotenv": "^5.2",
     "vanilla/garden-schema": "^2.2"
   },
   "autoload": {
@@ -32,8 +32,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "CodewarsKataExporter\\Tests\\": "tests/",
-      "CodewarsKataExporter\\Schemas\\": "schemas/"
+      "CodewarsKataExporter\\Schemas\\": "schemas/",
+      "CodewarsKataExporter\\Tests\\": "tests/"
     }
   }
 }
