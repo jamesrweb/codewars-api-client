@@ -37,8 +37,8 @@ class CompletedChallengesSchema
             "totalItems:int",
             "data:array" => [
                 "id:string",
-                "name:string",
-                "slug:string",
+                "name:string?",
+                "slug:string?",
                 "completedAt:dt",
                 "completedLanguages:array" => "string"
             ]
