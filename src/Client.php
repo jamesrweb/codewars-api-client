@@ -11,53 +11,30 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use ValueError;
 
 /**
  * Class Client
  * @package App
  */
-class Client
+final class Client
 {
     private HttpClientInterface $client;
-    private string $username = "";
     private string $base_url = "https://www.codewars.com/api/v1/users";
 
     /**
      * Client constructor
      *
      * @param HttpClientInterface $client
-     * @param string $api_key
+     * @param ClientOptionsInterface $options
      */
-    public function __construct(HttpClientInterface $client, string $api_key)
+    public function __construct(HttpClientInterface $client, ClientOptionsInterface $options)
     {
-        $client_options = ["headers" => ["Authorization" => $api_key]];
-        $this->client = ScopingHttpClient::forBaseUri($client, $this->base_url, $client_options);
+        $this->base_url = $this->base_url . "/" . $options->getUsername();
+        $this->client = ScopingHttpClient::forBaseUri($client, $this->base_url, $options->buildRequestOptions());
     }
 
     /**
-     * Get the currently set username used in requests
-     *
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set the username of the user you want to use for requests
-     *
-     * @param string $username
-     * @return void
-     */
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * Get the overview of the currently set user
+     * Get an overview of a user
      *
      * @return array
      * @throws ClientExceptionInterface
@@ -66,20 +43,25 @@ class Client
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function getUser(): array
+    public function userOverview(): array
     {
-        if (empty($this->username)) {
-            throw new ValueError("Username must be set");
-        }
-        $response = $this->client->request("GET", "$this->base_url/$this->username");
+        $response = $this->client->request("GET", $this->base_url);
         return $response->toArray();
     }
 
-    public function getUserCompletedChallenges() {
-        if(empty($this->username)) {
-            throw new ValueError("Username must be set");
-        }
-        $response = $this->client->request("GET", "$this->base_url/$this->username/code-challenges/completed");
+    /**
+     * Get the completed challenges of a user
+     *
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function completedChallenges()
+    {
+        $response = $this->client->request("GET", "$this->base_url/code-challenges/completed");
         return $response->toArray();
     }
 }

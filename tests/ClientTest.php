@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace CodewarsKataExporter\Tests;
 
 use CodewarsKataExporter\Client;
+use CodewarsKataExporter\ClientOptions;
 use CodewarsKataExporter\Schemas;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpClient\HttpClient;
-use ValueError;
 
 /**
  * Class ClientTest
@@ -17,64 +17,39 @@ use ValueError;
  */
 final class ClientTest extends TestCase
 {
-    private Client $client;
-
-    protected function setUp(): void
+    public function testUserOverviewHappyPath()
     {
         $http_client = HttpClient::create();
-        $this->client = new Client($http_client, "api_key");
-    }
+        $client_options = new ClientOptions("jamesrweb");
+        $client = new Client($http_client, $client_options);
 
-    public function testUsernameIsInitiallyEmpty()
-    {
-        $this->assertEquals("", $this->client->getUsername());
-    }
-
-    public function testUsernameIsUpdatedWhenProvided()
-    {
-        $this->client->setUsername("jamesrweb");
-        $this->assertEquals("jamesrweb", $this->client->getUsername());
-    }
-
-    public function testGetUserThrowsWhenNoUsernameSet()
-    {
-        $this->expectException(ValueError::class);
-        $this->client->getUser();
-    }
-
-    public function testGetUserThrowsWhenInvalidUserProvided()
-    {
-        $this->expectException(ClientException::class);
-        $this->expectExceptionCode(404);
-        $this->client->setUsername("user");
-        $this->client->getUser();
-    }
-
-    public function testGetUserReturnsCorrectResponseWithValidUsernameProvided()
-    {
-        $this->client->setUsername("jamesrweb");
-        $response = $this->client->getUser();
+        $response = $client->userOverview();
         $user_schema = new Schemas\UserSchema($response);
+
         $this->assertEquals(true, $user_schema->validate());
     }
 
-    public function testGetUserCompletedChallengesThrowsWhenNoUsernameSet() {
-        $this->expectException(ValueError::class);
-        $this->client->getUserCompletedChallenges();
-    }
+    public function testUserOverviewThrowsWithInvalidUsernameOption()
+    {
+        $http_client = HttpClient::create();
+        $client_options = new ClientOptions(base64_encode("invalid"));
+        $client = new Client($http_client, $client_options);
 
-    public function testGetUserCompletedChallengesThrowsWhenInvalidUserProvided() {
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(404);
-        $this->client->setUsername("user");
-        $this->client->getUserCompletedChallenges();
+
+        $client->userOverview();
     }
 
-    public function testGetUserCompletedChallengesReturnsCorrectResponseWithValidUsernameProvided()
+    public function testCompletedChallengesHappyPath()
     {
-        $this->client->setUsername("jamesrweb");
-        $response = $this->client->getUserCompletedChallenges();
+        $http_client = HttpClient::create();
+        $client_options = new ClientOptions("jamesrweb");
+        $client = new Client($http_client, $client_options);
+
+        $response = $client->completedChallenges();
         $completed_challenges_schema = new Schemas\CompletedChallengesSchema($response);
+
         $this->assertEquals(true, $completed_challenges_schema->validate());
     }
 }
