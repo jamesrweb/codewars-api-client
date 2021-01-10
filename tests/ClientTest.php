@@ -13,7 +13,6 @@ use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
 use CodewarsKataExporter\Schemas\UserSchema;
 use Garden\Schema\RefNotFoundException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -45,7 +44,7 @@ final class ClientTest extends TestCase
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function testUserOverviewHappyPath(): void
+    public function testUserOverview(): void
     {
         $client = new Client($this->http_client, $this->client_options);
 
@@ -56,24 +55,6 @@ final class ClientTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function testUserOverviewThrowsWithInvalidUsernameOption(): void
-    {
-        $client_options = new ClientOptions($_ENV["CODEWARS_INVALID_USERNAME"], $_ENV["CODEWARS_DUMMY_API_KEY"]);
-        $client = new Client($this->http_client, $client_options);
-
-        $this->expectException(ClientException::class);
-        $this->expectExceptionCode(404);
-
-        $client->userOverview();
-    }
-
-    /**
      * @throws RefNotFoundException
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
@@ -81,7 +62,7 @@ final class ClientTest extends TestCase
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function testCompletedChallengesHappyPath(): void
+    public function testCompletedChallenges(): void
     {
         $client = new Client($this->http_client, $this->client_options);
 
@@ -99,7 +80,7 @@ final class ClientTest extends TestCase
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function testAuthoredChallengesHappyPath(): void
+    public function testAuthoredChallenges(): void
     {
         $client = new Client($this->http_client, $this->client_options);
 
@@ -117,7 +98,7 @@ final class ClientTest extends TestCase
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function testChallengeOverviewHappyPath(): void
+    public function testChallengeOverview(): void
     {
         $client = new Client($this->http_client, $this->client_options);
 
@@ -125,22 +106,5 @@ final class ClientTest extends TestCase
 
         $completed_challenges_schema = new ChallengeSchema($response);
         $this->assertEquals(true, $completed_challenges_schema->validate());
-    }
-
-    /**
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function testChallengeOverviewThrowsForAnInvalidId(): void
-    {
-        $client = new Client($this->http_client, $this->client_options);
-
-        $this->expectException(ClientException::class);
-        $this->expectExceptionCode(404);
-
-        $client->challenge($_ENV["CODEWARS_INVALID_CHALLENGE_ID"]);
     }
 }
