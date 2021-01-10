@@ -6,10 +6,21 @@ namespace CodewarsKataExporter\Tests;
 
 use CodewarsKataExporter\Client;
 use CodewarsKataExporter\ClientOptions;
-use CodewarsKataExporter\Schemas;
+use CodewarsKataExporter\ClientOptionsInterface;
+use CodewarsKataExporter\Schemas\AuthoredChallengesSchema;
+use CodewarsKataExporter\Schemas\ChallengeSchema;
+use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
+use CodewarsKataExporter\Schemas\UserSchema;
+use Garden\Schema\RefNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class ClientTest
@@ -17,23 +28,44 @@ use Symfony\Component\HttpClient\HttpClient;
  */
 final class ClientTest extends TestCase
 {
-    public function testUserOverviewHappyPath()
+    private HttpClientInterface $http_client;
+    private ClientOptionsInterface $client_options;
+
+    public function setUp(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions("jamesrweb");
-        $client = new Client($http_client, $client_options);
+        $this->http_client = HttpClient::create();
+        $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"]);
+    }
+
+    /**
+     * @throws RefNotFoundException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function testUserOverviewHappyPath(): void
+    {
+        $client = new Client($this->http_client, $this->client_options);
 
         $response = $client->userOverview();
-        $user_schema = new Schemas\UserSchema($response);
 
+        $user_schema = new UserSchema($response);
         $this->assertEquals(true, $user_schema->validate());
     }
 
-    public function testUserOverviewThrowsWithInvalidUsernameOption()
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function testUserOverviewThrowsWithInvalidUsernameOption(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions(base64_encode("invalid"));
-        $client = new Client($http_client, $client_options);
+        $this->client_options->setUsername($_ENV["CODEWARS_INVALID_USERNAME"]);
+        $client = new Client($this->http_client, $this->client_options);
 
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(404);
@@ -41,51 +73,74 @@ final class ClientTest extends TestCase
         $client->userOverview();
     }
 
-    public function testCompletedChallengesHappyPath()
+    /**
+     * @throws RefNotFoundException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function testCompletedChallengesHappyPath(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions("jamesrweb");
-        $client = new Client($http_client, $client_options);
+        $client = new Client($this->http_client, $this->client_options);
 
         $response = $client->completedChallenges();
-        $completed_challenges_schema = new Schemas\CompletedChallengesSchema($response);
 
+        $completed_challenges_schema = new CompletedChallengesSchema($response);
         $this->assertEquals(true, $completed_challenges_schema->validate());
     }
 
-    public function testAuthoredChallengesHappyPath()
+    /**
+     * @throws RefNotFoundException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function testAuthoredChallengesHappyPath(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions("jamesrweb");
-        $client = new Client($http_client, $client_options);
+        $client = new Client($this->http_client, $this->client_options);
 
         $response = $client->authoredChallenges();
-        $completed_challenges_schema = new Schemas\AuthoredChallengesSchema($response);
 
+        $completed_challenges_schema = new AuthoredChallengesSchema($response);
         $this->assertEquals(true, $completed_challenges_schema->validate());
     }
 
-    public function testChallengeOverviewHappyPath()
+    /**
+     * @throws RefNotFoundException
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function testChallengeOverviewHappyPath(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions("jamesrweb");
-        $client = new Client($http_client, $client_options);
+        $client = new Client($this->http_client, $this->client_options);
 
-        $response = $client->challenge("5277c8a221e209d3f6000b56");
-        $completed_challenges_schema = new Schemas\ChallengeSchema($response);
+        $response = $client->challenge($_ENV["CODEWARS_VALID_CHALLENGE_ID"]);
 
+        $completed_challenges_schema = new ChallengeSchema($response);
         $this->assertEquals(true, $completed_challenges_schema->validate());
     }
 
-    public function testChallengeOverviewThrowsForAnInvalidId()
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function testChallengeOverviewThrowsForAnInvalidId(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions("jamesrweb");
-        $client = new Client($http_client, $client_options);
+        $client = new Client($this->http_client, $this->client_options);
 
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(404);
 
-        $client->challenge("invalid");
+        $client->challenge($_ENV["CODEWARS_INVALID_CHALLENGE_ID"]);
     }
 }

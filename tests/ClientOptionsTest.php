@@ -8,8 +8,8 @@ use CodewarsKataExporter\ClientOptions;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ClientTest
- * @package App\Tests
+ * Class ClientOptionsTest
+ * @package CodewarsKataExporter\Tests
  */
 final class ClientOptionsTest extends TestCase
 {
@@ -17,42 +17,45 @@ final class ClientOptionsTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->client_options = new ClientOptions("jamesrweb");
+        $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"]);
     }
 
-    public function testBuildRequestOptionsDefaultPath()
+    public function testBuildRequestOptionsDefaultPath(): void
     {
         $this->assertEquals([], $this->client_options->buildRequestOptions());
     }
 
-    public function testBuildRequestOptionsHeadersPath()
+    public function testBuildRequestOptionsHeadersPath(): void
     {
-        $this->client_options->setApiKey("test_key");
+        $api_key = $_ENV["CODEWARS_DUMMY_API_KEY"];
+        $this->client_options->setApiKey($api_key);
         $this->assertEquals(
-            ["headers" => ["Authorization" => "test_key"]],
+            ["headers" => ["Authorization" => $api_key]],
             $this->client_options->buildRequestOptions()
         );
     }
 
-    public function testGetUsername()
+    public function testGetUsername(): void
     {
-        $this->assertEquals("jamesrweb", $this->client_options->getUsername());
+        $this->assertEquals($_ENV["CODEWARS_VALID_USERNAME"], $this->client_options->getUsername());
     }
 
-    public function testSetUsername()
+    public function testSetUsername(): void
     {
-        $this->client_options->setUsername("someone_else");
-        $this->assertEquals("someone_else", $this->client_options->getUsername());
+        $username = $_ENV["CODEWARS_INVALID_USERNAME"];
+        $this->client_options->setUsername($username);
+        $this->assertEquals($username, $this->client_options->getUsername());
     }
 
-    public function testGetApiKey()
+    public function testGetApiKey(): void
     {
         $this->assertEquals(null, $this->client_options->getApiKey());
     }
 
-    public function testSetApiKey()
+    public function testSetApiKey(): void
     {
-        $this->client_options->setApiKey("test_key");
-        $this->assertEquals("test_key", $this->client_options->getApiKey());
+        $api_key = $_ENV["CODEWARS_DUMMY_API_KEY"];
+        $this->client_options->setApiKey($api_key);
+        $this->assertEquals($api_key, $this->client_options->getApiKey());
     }
 }
