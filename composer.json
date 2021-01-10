@@ -4,6 +4,22 @@
   "type": "library",
   "version": "1.0.0",
   "license": "MIT",
+  "keywords": [
+    "codewars",
+    "api-client"
+  ],
+  "readme": "README.md",
+  "homepage": "https://jamesrweb.github.io/codewars-kata-exporter/",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packagist.org/packages/jamesrweb/codewars-kata-exporter"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/jamesrweb/codewars-kata-exporter"
+    }
+  ],
   "authors": [
     {
       "name": "James Robb",
