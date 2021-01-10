@@ -13,7 +13,7 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "https://packagist.org/packages/jamesrweb/codewars-kata-exporter"
+      "url": "https://repo.packagist.org"
     },
     {
       "type": "vcs",
