@@ -16,10 +16,12 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * Class Client
  * @package CodewarsKataExporter
  */
-final class Client
+final class Client implements UserInterface, ChallengeInterface
 {
     private HttpClientInterface $client;
-    private string $base_url = "https://www.codewars.com/api/v1/users";
+    private string $base_url = "https://www.codewars.com/api/v1";
+    private string $challenge_url;
+    private string $user_url;
 
     /**
      * Client constructor
@@ -29,8 +31,9 @@ final class Client
      */
     public function __construct(HttpClientInterface $client, ClientOptionsInterface $options)
     {
-        $this->base_url = $this->base_url . "/" . $options->getUsername();
-        $this->client = ScopingHttpClient::forBaseUri($client, $this->base_url, $options->buildRequestOptions());
+        $this->user_url = $this->base_url . "/users/" . $options->getUsername();
+        $this->challenge_url = $this->base_url . "/code-challenges";
+        $this->client = ScopingHttpClient::forBaseUri($client, $this->user_url, $options->buildRequestOptions());
     }
 
     /**
@@ -45,7 +48,7 @@ final class Client
      */
     public function userOverview(): array
     {
-        $response = $this->client->request("GET", $this->base_url);
+        $response = $this->client->request("GET", $this->user_url);
         return $response->toArray();
     }
 
@@ -63,12 +66,12 @@ final class Client
      */
     private function completedChallengesHelper(int $page, array $output): array
     {
-        $response = $this->client->request("GET", "$this->base_url/code-challenges/completed?page=" . $page - 1);
+        $response = $this->client->request("GET", $this->user_url . "/code-challenges/completed?page=" . $page - 1);
         $response_array = $response->toArray();
 
         if (count($output) === 0) $output = array_merge($output, $response_array);
 
-        if ($page - 1 < $response_array["totalPages"]) {
+        if ($page <= $response_array["totalPages"]) {
             $a = array_map("serialize", $output["data"]);
             $b = array_map("serialize", $response_array["data"]);
             $differences = array_diff($a, $b);
@@ -112,7 +115,24 @@ final class Client
      */
     public function authoredChallenges(): array
     {
-        $response = $this->client->request("GET", "$this->base_url/code-challenges/authored");
+        $response = $this->client->request("GET", "$this->user_url/code-challenges/authored");
+        return $response->toArray();
+    }
+
+    /**
+     * Gets the information regarding a specific challenge by id
+     *
+     * @param string $id
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function challenge(string $id): array
+    {
+        $response = $this->client->request("GET", "$this->challenge_url/$id");
         return $response->toArray();
     }
 }

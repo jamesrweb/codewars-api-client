@@ -11,7 +11,7 @@ use Garden\Schema\Schema;
  * Class CompletedChallengesSchema
  * @package CodewarsKataExporter\Schemas
  */
-class CompletedChallengesSchema
+final class CompletedChallengesSchema implements SchemaInterface
 {
     private array $data;
 

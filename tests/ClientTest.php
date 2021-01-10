@@ -64,4 +64,28 @@ final class ClientTest extends TestCase
 
         $this->assertEquals(true, $completed_challenges_schema->validate());
     }
+
+    public function testChallengeOverviewHappyPath()
+    {
+        $http_client = HttpClient::create();
+        $client_options = new ClientOptions("jamesrweb");
+        $client = new Client($http_client, $client_options);
+
+        $response = $client->challenge("5277c8a221e209d3f6000b56");
+        $completed_challenges_schema = new Schemas\ChallengeSchema($response);
+
+        $this->assertEquals(true, $completed_challenges_schema->validate());
+    }
+
+    public function testChallengeOverviewThrowsForAnInvalidId()
+    {
+        $http_client = HttpClient::create();
+        $client_options = new ClientOptions("jamesrweb");
+        $client = new Client($http_client, $client_options);
+
+        $this->expectException(ClientException::class);
+        $this->expectExceptionCode(404);
+
+        $client->challenge("invalid");
+    }
 }

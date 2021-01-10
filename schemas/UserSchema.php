@@ -11,7 +11,7 @@ use Garden\Schema\Schema;
  * Class UserSchema
  * @package CodewarsKataExporter\Schemas
  */
-class UserSchema
+final class UserSchema implements SchemaInterface
 {
     private array $data;
 
