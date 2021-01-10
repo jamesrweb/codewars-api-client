@@ -34,7 +34,7 @@ final class ClientTest extends TestCase
     public function setUp(): void
     {
         $this->http_client = HttpClient::create();
-        $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"]);
+        $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"], $_ENV["CODEWARS_DUMMY_API_KEY"]);
     }
 
     /**
@@ -64,8 +64,8 @@ final class ClientTest extends TestCase
      */
     public function testUserOverviewThrowsWithInvalidUsernameOption(): void
     {
-        $this->client_options->setUsername($_ENV["CODEWARS_INVALID_USERNAME"]);
-        $client = new Client($this->http_client, $this->client_options);
+        $client_options = new ClientOptions($_ENV["CODEWARS_INVALID_USERNAME"], $_ENV["CODEWARS_DUMMY_API_KEY"]);
+        $client = new Client($this->http_client, $client_options);
 
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(404);

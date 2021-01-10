@@ -10,11 +10,7 @@ namespace CodewarsKataExporter;
  */
 interface ClientOptionsInterface
 {
-    public function getUsername(): string;
+    public function username(): string;
 
-    public function setUsername(string $username): void;
-
-    public function getApiKey(): ?string;
-
-    public function setApiKey(string $api_key): void;
+    public function headers(): array;
 }

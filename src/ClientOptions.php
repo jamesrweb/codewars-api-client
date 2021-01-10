@@ -11,71 +11,37 @@ namespace CodewarsKataExporter;
 final class ClientOptions implements ClientOptionsInterface
 {
     private string $username;
-    private ?string $api_key;
+    private string $api_key;
 
     /**
      * ClientOptions constructor
      *
      * @param string $username
-     * @param string|null $api_key
+     * @param string $api_key
      */
-    public function __construct(string $username, ?string $api_key = null)
+    public function __construct(string $username, string $api_key)
     {
         $this->username = $username;
         $this->api_key = $api_key;
     }
 
     /**
-     * Get the currently set username option
+     * Get the username
      *
      * @return string
      */
-    public function getUsername(): string
+    public function username(): string
     {
         return $this->username;
     }
 
     /**
-     * Set the username option
-     *
-     * @param string $username
-     */
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * Get the currently set api key option
-     *
-     * @return string|null
-     */
-    public function getApiKey(): ?string
-    {
-        return $this->api_key;
-    }
-
-    /**
-     * Set the api key option
-     *
-     * @param string $api_key
-     */
-    public function setApiKey(string $api_key): void
-    {
-        $this->api_key = $api_key;
-    }
-
-    /**
-     * Build the options for each API request of the Client
+     * Get the headers for each API request of the Client
      *
      * @return array
      */
-    public function buildRequestOptions(): array
+    public function headers(): array
     {
-        $result = [];
-        if (is_null($this->api_key) === false) {
-            $result["headers"] = ["Authorization" => $this->api_key];
-        }
-        return $result;
+        return ["headers" => ["Authorization" => $this->api_key]];
     }
 }

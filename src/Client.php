@@ -31,9 +31,9 @@ final class Client implements UserInterface, ChallengeInterface
      */
     public function __construct(HttpClientInterface $client, ClientOptionsInterface $options)
     {
-        $this->user_url = $this->base_url . "/users/" . $options->getUsername();
+        $this->user_url = $this->base_url . "/users/" . $options->username();
         $this->challenge_url = $this->base_url . "/code-challenges";
-        $this->client = ScopingHttpClient::forBaseUri($client, $this->user_url, $options->buildRequestOptions());
+        $this->client = ScopingHttpClient::forBaseUri($client, $this->user_url, $options->headers());
     }
 
     /**
