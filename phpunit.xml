@@ -7,6 +7,7 @@
         </report>
         <include>
             <directory suffix=".php">src/</directory>
+            <directory suffix=".php">schemas/</directory>
         </include>
     </coverage>
     <logging/>

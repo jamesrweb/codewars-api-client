@@ -13,24 +13,12 @@ use Garden\Schema\Schema;
  */
 final class UserSchema implements SchemaInterface
 {
-    private array $data;
-
     /**
-     * UserSchema constructor
-     *
-     * @param array $data
-     */
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
-
-    /**
-     * Get the parsed schema to validate the data on
+     * Get the schema used for validation
      *
      * @return Schema
      */
-    private function getSchema(): Schema
+    public function schema(): Schema
     {
         return Schema::parse([
             "username:string",
@@ -48,18 +36,22 @@ final class UserSchema implements SchemaInterface
                 ],
                 "languages:object" => "object"
             ],
-            "codeChallenges:object"
+            "codeChallenges:object" => [
+                "totalAuthored:int",
+                "totalCompleted:int"
+            ]
         ]);
     }
 
     /**
      * Validate the schema
      *
+     * @param array $data
      * @return bool
      * @throws RefNotFoundException
      */
-    public function validate(): bool
+    public function validate(array $data): bool
     {
-        return $this->getSchema()->isValid($this->data);
+        return $this->schema()->isValid($data);
     }
 }

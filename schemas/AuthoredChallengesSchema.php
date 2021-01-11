@@ -13,24 +13,12 @@ use Garden\Schema\Schema;
  */
 final class AuthoredChallengesSchema implements SchemaInterface
 {
-    private array $data;
-
     /**
-     * AuthoredChallengesSchema constructor
-     *
-     * @param array $data
-     */
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
-
-    /**
-     * Get the parsed schema to validate the data on
+     * Get the schema used for validation
      *
      * @return Schema
      */
-    private function getSchema(): Schema
+    public function schema(): Schema
     {
         return Schema::parse([
             "data:array" => [
@@ -48,11 +36,12 @@ final class AuthoredChallengesSchema implements SchemaInterface
     /**
      * Validate the schema
      *
+     * @param array $data
      * @return bool
      * @throws RefNotFoundException
      */
-    public function validate(): bool
+    public function validate(array $data): bool
     {
-        return $this->getSchema()->isValid($this->data);
+        return $this->schema()->isValid($data);
     }
 }

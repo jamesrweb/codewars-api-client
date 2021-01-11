@@ -6,7 +6,6 @@ namespace CodewarsKataExporter\Tests;
 
 use CodewarsKataExporter\Client;
 use CodewarsKataExporter\ClientOptions;
-use CodewarsKataExporter\ClientOptionsInterface;
 use CodewarsKataExporter\Schemas\AuthoredChallengesSchema;
 use CodewarsKataExporter\Schemas\ChallengeSchema;
 use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
@@ -19,7 +18,6 @@ use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class ClientTest
@@ -27,8 +25,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 final class ClientTest extends TestCase
 {
-    private HttpClientInterface $http_client;
-    private ClientOptionsInterface $client_options;
+    private Client $client;
 
     public function setUp(): void
     {
@@ -51,8 +48,8 @@ final class ClientTest extends TestCase
     public function testUserOverview(): void
     {
         $response = $this->client->userOverview();
-        $schema = new UserSchema($response);
-        $this->assertEquals(true, $schema->validate());
+        $schema = new UserSchema();
+        $this->assertEquals(true, $schema->validate($response));
     }
 
     /**
@@ -66,8 +63,8 @@ final class ClientTest extends TestCase
     public function testCompletedChallenges(): void
     {
         $response = $this->client->completedChallenges();
-        $schema = new CompletedChallengesSchema($response);
-        $this->assertEquals(true, $schema->validate());
+        $schema = new CompletedChallengesSchema();
+        $this->assertEquals(true, $schema->validate($response));
     }
 
     /**
@@ -81,8 +78,8 @@ final class ClientTest extends TestCase
     public function testAuthoredChallenges(): void
     {
         $response = $this->client->authoredChallenges();
-        $schema = new AuthoredChallengesSchema($response);
-        $this->assertEquals(true, $schema->validate());
+        $schema = new AuthoredChallengesSchema();
+        $this->assertEquals(true, $schema->validate($response));
     }
 
     /**
@@ -98,7 +95,7 @@ final class ClientTest extends TestCase
         $response = $this->client->challenge(
             $_ENV["CODEWARS_VALID_CHALLENGE_ID"]
         );
-        $schema = new ChallengeSchema($response);
-        $this->assertEquals(true, $schema->validate());
+        $schema = new ChallengeSchema();
+        $this->assertEquals(true, $schema->validate($response));
     }
 }
