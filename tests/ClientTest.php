@@ -32,8 +32,12 @@ final class ClientTest extends TestCase
 
     public function setUp(): void
     {
-        $this->http_client = HttpClient::create();
-        $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"], $_ENV["CODEWARS_DUMMY_API_KEY"]);
+        $http_client = HttpClient::create();
+        $client_options = new ClientOptions(
+            $_ENV["CODEWARS_VALID_USERNAME"],
+            $_ENV["CODEWARS_DUMMY_API_KEY"]
+        );
+        $this->client = new Client($http_client, $client_options);
     }
 
     /**
@@ -46,12 +50,9 @@ final class ClientTest extends TestCase
      */
     public function testUserOverview(): void
     {
-        $client = new Client($this->http_client, $this->client_options);
-
-        $response = $client->userOverview();
-
-        $user_schema = new UserSchema($response);
-        $this->assertEquals(true, $user_schema->validate());
+        $response = $this->client->userOverview();
+        $schema = new UserSchema($response);
+        $this->assertEquals(true, $schema->validate());
     }
 
     /**
@@ -64,12 +65,9 @@ final class ClientTest extends TestCase
      */
     public function testCompletedChallenges(): void
     {
-        $client = new Client($this->http_client, $this->client_options);
-
-        $response = $client->completedChallenges();
-
-        $completed_challenges_schema = new CompletedChallengesSchema($response);
-        $this->assertEquals(true, $completed_challenges_schema->validate());
+        $response = $this->client->completedChallenges();
+        $schema = new CompletedChallengesSchema($response);
+        $this->assertEquals(true, $schema->validate());
     }
 
     /**
@@ -82,12 +80,9 @@ final class ClientTest extends TestCase
      */
     public function testAuthoredChallenges(): void
     {
-        $client = new Client($this->http_client, $this->client_options);
-
-        $response = $client->authoredChallenges();
-
-        $completed_challenges_schema = new AuthoredChallengesSchema($response);
-        $this->assertEquals(true, $completed_challenges_schema->validate());
+        $response = $this->client->authoredChallenges();
+        $schema = new AuthoredChallengesSchema($response);
+        $this->assertEquals(true, $schema->validate());
     }
 
     /**
@@ -100,11 +95,10 @@ final class ClientTest extends TestCase
      */
     public function testChallengeOverview(): void
     {
-        $client = new Client($this->http_client, $this->client_options);
-
-        $response = $client->challenge($_ENV["CODEWARS_VALID_CHALLENGE_ID"]);
-
-        $completed_challenges_schema = new ChallengeSchema($response);
-        $this->assertEquals(true, $completed_challenges_schema->validate());
+        $response = $this->client->challenge(
+            $_ENV["CODEWARS_VALID_CHALLENGE_ID"]
+        );
+        $schema = new ChallengeSchema($response);
+        $this->assertEquals(true, $schema->validate());
     }
 }
