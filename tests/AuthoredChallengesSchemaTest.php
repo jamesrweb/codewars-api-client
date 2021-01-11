@@ -25,18 +25,9 @@ final class AuthoredChallengesSchemaTest extends TestCase
     /**
      * @throws RefNotFoundException
      */
-    public function testValidateReturnsFalseWithEmptyArrayGiven(): void
-    {
-        $data = [];
-        $this->assertEquals(false, $this->schema->validate($data));
-    }
-
-    /**
-     * @throws RefNotFoundException
-     */
     public function testValidateReturnsFalseWithMissingFields(): void
     {
-        $data = ["data" => [["id" => base64_encode("id")]]];
+        $data = [["id" => base64_encode("id")]];
         $this->assertEquals(false, $this->schema->validate($data));
     }
 
@@ -46,16 +37,14 @@ final class AuthoredChallengesSchemaTest extends TestCase
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $data = [
-            "data" => [
-                [
-                    "id" => base64_encode("id"),
-                    "name" => "name",
-                    "description" => "description",
-                    "rank" => 1,
-                    "rankName" => "rank",
-                    "tags" => ["one", "two"],
-                    "languages" => ["one", "two"]
-                ]
+            [
+                "id" => base64_encode("id"),
+                "name" => "name",
+                "description" => "description",
+                "rank" => 1,
+                "rankName" => "rank",
+                "tags" => ["one", "two"],
+                "languages" => ["one", "two"]
             ]
         ];
         $this->assertEquals(true, $this->schema->validate($data));

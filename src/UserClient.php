@@ -61,7 +61,8 @@ final class UserClient implements UserInterface
      */
     public function completed(): array
     {
-        return $this->completedPaginationHelper(1, []);
+        $result = $this->completedPaginationHelper(1, []);
+        return $result["data"];
     }
 
     /**
@@ -113,6 +114,7 @@ final class UserClient implements UserInterface
     public function authored(): array
     {
         $response = $this->client->request("GET", "$this->base_url/code-challenges/authored");
-        return $response->toArray();
+        $result = $response->toArray();
+        return $result["data"];
     }
 }

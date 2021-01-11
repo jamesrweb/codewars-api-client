@@ -33,9 +33,7 @@ final class CompletedChallengesSchema implements SchemaInterface
     public function schema(): Schema
     {
         return Schema::parse([
-            "totalPages:int",
-            "totalItems:int",
-            "data:array" => [
+            ":array" => [
                 "id:string",
                 "name:string?",
                 "slug:string?",

@@ -33,7 +33,7 @@ final class AuthoredChallengesSchema implements SchemaInterface
     public function schema(): Schema
     {
         return Schema::parse([
-            "data:array" => [
+            ":array" => [
                 "id:string",
                 "name:string",
                 "description:string",
