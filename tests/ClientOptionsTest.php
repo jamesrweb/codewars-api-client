@@ -28,7 +28,7 @@ final class ClientOptionsTest extends TestCase
         );
     }
 
-    public function testUsernameGetter()
+    public function testUsernameGetter(): void
     {
         $this->assertEquals($_ENV["CODEWARS_VALID_USERNAME"], $this->client_options->username());
     }

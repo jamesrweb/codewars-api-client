@@ -9,6 +9,10 @@ use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class CompletedChallengesSchemaTest
+ * @package CodewarsKataExporter\Tests
+ */
 class CompletedChallengesSchemaTest extends TestCase
 {
     private CompletedChallengesSchema $schema;
@@ -49,7 +53,7 @@ class CompletedChallengesSchemaTest extends TestCase
                     "id" => base64_encode("id"),
                     "name" => "name",
                     "slug" => "some-thing",
-                    "completedAt" => date('d/m/Y h:i:s a', time()),
+                    "completedAt" => date("d/m/Y h:i:s a", time()),
                     "completedLanguages" => ["one", "two"]
                 ]
             ]

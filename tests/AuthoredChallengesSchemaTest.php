@@ -9,6 +9,10 @@ use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class AuthoredChallengesSchemaTest
+ * @package CodewarsKataExporter\Tests
+ */
 class AuthoredChallengesSchemaTest extends TestCase
 {
     private AuthoredChallengesSchema $schema;

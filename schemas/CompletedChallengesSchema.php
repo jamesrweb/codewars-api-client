@@ -14,6 +14,18 @@ use Garden\Schema\Schema;
 final class CompletedChallengesSchema implements SchemaInterface
 {
     /**
+     * Validate the schema
+     *
+     * @param array $data
+     * @return bool
+     * @throws RefNotFoundException
+     */
+    public function validate(array $data): bool
+    {
+        return $this->schema()->isValid($data);
+    }
+
+    /**
      * Get the schema used for validation
      *
      * @return Schema
@@ -31,17 +43,5 @@ final class CompletedChallengesSchema implements SchemaInterface
                 "completedLanguages:array" => "string"
             ]
         ]);
-    }
-
-    /**
-     * Validate the schema
-     *
-     * @param array $data
-     * @return bool
-     * @throws RefNotFoundException
-     */
-    public function validate(array $data): bool
-    {
-        return $this->schema()->isValid($data);
     }
 }

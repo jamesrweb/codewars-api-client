@@ -53,6 +53,21 @@ final class Client implements UserInterface, ChallengeInterface
     }
 
     /**
+     * Get the completed challenges of the user
+     *
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function completedChallenges(): array
+    {
+        return $this->completedChallengesHelper(1, []);
+    }
+
+    /**
      * A recursive helper to get all completed challenge solutions accounting for pagination
      *
      * @param int $page
@@ -86,21 +101,6 @@ final class Client implements UserInterface, ChallengeInterface
         }
 
         return $output;
-    }
-
-    /**
-     * Get the completed challenges of the user
-     *
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function completedChallenges(): array
-    {
-        return $this->completedChallengesHelper(1, []);
     }
 
     /**
