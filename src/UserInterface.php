@@ -10,9 +10,9 @@ namespace CodewarsKataExporter;
  */
 interface UserInterface
 {
-    public function userOverview(): array;
+    public function user(): array;
 
-    public function completedChallenges(): array;
+    public function completed(): array;
 
-    public function authoredChallenges(): array;
+    public function authored(): array;
 }

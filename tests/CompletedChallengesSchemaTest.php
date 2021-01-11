@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * Class CompletedChallengesSchemaTest
  * @package CodewarsKataExporter\Tests
  */
-class CompletedChallengesSchemaTest extends TestCase
+final class CompletedChallengesSchemaTest extends TestCase
 {
     private CompletedChallengesSchema $schema;
 
