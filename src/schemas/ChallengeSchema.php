@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Schemas;
 
+use CodewarsKataExporter\Interfaces\SchemaInterface;
 use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 

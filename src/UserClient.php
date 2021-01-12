@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter;
 
+use CodewarsKataExporter\Interfaces\ClientOptionsInterface;
+use CodewarsKataExporter\Interfaces\UserClientInterface;
 use Symfony\Component\HttpClient\ScopingHttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -16,14 +18,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * Class UserClient
  * @package CodewarsKataExporter
  */
-final class UserClient implements UserInterface
+final class UserClient implements UserClientInterface
 {
     private HttpClientInterface $client;
     private string $base_url = "https://www.codewars.com/api/v1";
 
     /**
-     * Client constructor
-     *
+     * UserClient constructor
      * @param HttpClientInterface $client
      * @param ClientOptionsInterface $options
      */

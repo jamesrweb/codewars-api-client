@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Schemas;
+namespace CodewarsKataExporter\Interfaces;
 
 use Garden\Schema\Schema;
 
 /**
  * Interface SchemaInterface
- * @package CodewarsKataExporter\Schemas
+ * @package CodewarsKataExporter\Interfaces
  */
 interface SchemaInterface
 {

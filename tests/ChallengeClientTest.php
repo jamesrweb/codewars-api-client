@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace CodewarsKataExporter\Tests;
 
 use CodewarsKataExporter\ChallengeClient;
-use CodewarsKataExporter\ChallengeInterface;
 use CodewarsKataExporter\ClientOptions;
+use CodewarsKataExporter\Interfaces\ChallengeClientInterface;
 use CodewarsKataExporter\Schemas\ChallengeSchema;
 use Garden\Schema\RefNotFoundException;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
  */
 final class ChallengeClientTest extends TestCase
 {
-    private ChallengeInterface $client;
+    private ChallengeClientInterface $client;
 
     public function setUp(): void
     {
@@ -48,5 +48,13 @@ final class ChallengeClientTest extends TestCase
         $response = $this->client->challenge($_ENV["CODEWARS_VALID_CHALLENGE_ID"]);
         $schema = new ChallengeSchema();
         $this->assertEquals(true, $schema->validate($response));
+    }
+
+    public function testChallenges(): void
+    {
+        $challenge = ["id" => $_ENV["CODEWARS_VALID_CHALLENGE_ID"]];
+        $response = $this->client->challenges([$challenge]);
+        $schema = new ChallengeSchema();
+        $this->assertEquals(true, $schema->validate($response[0]));
     }
 }

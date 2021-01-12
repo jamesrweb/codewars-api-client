@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter;
+namespace CodewarsKataExporter\Interfaces;
 
 /**
- * Interface UserInterface
- * @package CodewarsKataExporter
+ * Interface UserClientInterface
+ * @package CodewarsKataExporter\Interfaces
  */
-interface UserInterface
+interface UserClientInterface
 {
     public function user(): array;
 

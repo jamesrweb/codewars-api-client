@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Tests;
 
-use CodewarsKataExporter\Client;
 use CodewarsKataExporter\ClientOptions;
+use CodewarsKataExporter\Interfaces\UserClientInterface;
 use CodewarsKataExporter\Schemas\AuthoredChallengesSchema;
 use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
 use CodewarsKataExporter\Schemas\UserSchema;
 use CodewarsKataExporter\UserClient;
-use CodewarsKataExporter\UserInterface;
 use Garden\Schema\RefNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
@@ -26,7 +25,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
  */
 final class UserClientTest extends TestCase
 {
-    private UserInterface $client;
+    private UserClientInterface $client;
 
     public function setUp(): void
     {
