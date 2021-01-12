@@ -45,12 +45,12 @@
   },
   "autoload": {
     "psr-4": {
-      "CodewarsKataExporter\\": "src/"
+      "CodewarsKataExporter\\": "src/",
+      "CodewarsKataExporter\\Interfaces\\": "src/interfaces/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "CodewarsKataExporter\\Interfaces\\": "src/interfaces/",
       "CodewarsKataExporter\\Schemas\\": "src/schemas/",
       "CodewarsKataExporter\\Tests\\": "tests/"
     }
