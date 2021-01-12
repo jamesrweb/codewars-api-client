@@ -1,10 +1,10 @@
 # Codewars Kata Exporter
 
-[![Awesome Badges](https://img.shields.io/badge/test%20coverage-100%25-brightgreen.svg)](https://github.com/jamesrweb/codewars-kata-exporter)
+[![Test coverage](https://img.shields.io/badge/test%20coverage-100%25-brightgreen.svg)](https://github.com/jamesrweb/codewars-kata-exporter)
 [![GitHub license](https://img.shields.io/github/license/jamesrweb/codewars-kata-exporter.svg)](https://github.com/jamesrweb/codewars-kata-exporter/blob/master/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/graphs/contributors/)
 [![GitHub issues](https://img.shields.io/github/issues/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/issues/)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/pulls/)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/pulls/)
 
 A library built to interact with the Codewars API and platform.
 
