@@ -97,15 +97,15 @@ There are a number of interfaces exposed for you to use if required. These are n
 
 This interface is for the methods required on the `ClientsOptions` class.
 
-## The `SchemaInterface`
+### The `SchemaInterface`
 
 This interface is for the methods required on the items exported from the `CodewarsKataExporter\Schemas` namespace.
 
-## The `ChallengeClientInterface`
+### The `ChallengeClientInterface`
 
 This interface is for the methods required on the `ChallengeClient` class.
 
-## The `UserClientInterface`
+### The `UserClientInterface`
 
 This interface is for the methods required on the `UserClient` class.
 
