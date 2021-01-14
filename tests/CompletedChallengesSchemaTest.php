@@ -6,7 +6,6 @@ namespace CodewarsKataExporter\Tests;
 
 use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
 use Garden\Schema\RefNotFoundException;
-use Garden\Schema\Schema;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -46,11 +45,5 @@ final class CompletedChallengesSchemaTest extends TestCase
             ]
         ];
         $this->assertEquals(true, $this->schema->validate($data));
-    }
-
-    public function testSchema(): void
-    {
-        $schema = $this->schema->schema();
-        $this->assertInstanceOf(Schema::class, $schema);
     }
 }

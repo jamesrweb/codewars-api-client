@@ -31,7 +31,7 @@ final class CompletedChallengesSchema implements SchemaInterface
      *
      * @return Schema
      */
-    public function schema(): Schema
+    private function schema(): Schema
     {
         return Schema::parse([
             ":array" => [
