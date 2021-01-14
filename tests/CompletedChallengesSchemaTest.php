@@ -48,7 +48,7 @@ final class CompletedChallengesSchemaTest extends TestCase
         $this->assertEquals(true, $this->schema->validate($data));
     }
 
-    public function testGetSchema(): void
+    public function testSchema(): void
     {
         $schema = $this->schema->schema();
         $this->assertInstanceOf(Schema::class, $schema);

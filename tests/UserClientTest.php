@@ -45,7 +45,7 @@ final class UserClientTest extends TestCase
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function testUserOverview(): void
+    public function testUser(): void
     {
         $response = $this->client->user();
         $schema = new UserSchema();

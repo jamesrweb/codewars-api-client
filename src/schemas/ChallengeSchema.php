@@ -38,8 +38,8 @@ final class ChallengeSchema implements SchemaInterface
             "name:string",
             "slug:string",
             "category:string",
-            "publishedAt:dt",
-            "approvedAt:dt",
+            "publishedAt:string",
+            "approvedAt:string",
             "languages:array" => "string",
             "url:string",
             "rank:object" => [

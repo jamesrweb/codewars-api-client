@@ -43,13 +43,21 @@ final class ChallengeClientTest extends TestCase
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      */
-    public function testChallengeOverview(): void
+    public function testChallenge(): void
     {
         $response = $this->client->challenge($_ENV["CODEWARS_VALID_CHALLENGE_ID"]);
         $schema = new ChallengeSchema();
         $this->assertEquals(true, $schema->validate($response));
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws RefNotFoundException
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
     public function testChallenges(): void
     {
         $challenge = ["id" => $_ENV["CODEWARS_VALID_CHALLENGE_ID"]];

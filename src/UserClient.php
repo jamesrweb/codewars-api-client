@@ -25,6 +25,7 @@ final class UserClient implements UserClientInterface
 
     /**
      * UserClient constructor
+     *
      * @param HttpClientInterface $client
      * @param ClientOptionsInterface $options
      */
@@ -80,7 +81,8 @@ final class UserClient implements UserClientInterface
      */
     private function completedPaginationHelper(int $page, array $output): array
     {
-        $response = $this->client->request("GET", $this->base_url . "/code-challenges/completed?page=" . $page - 1);
+        $query = http_build_query(["page" => $page - 1]);
+        $response = $this->client->request("GET", $this->base_url . "/code-challenges/completed?" . $query);
         $response_array = $response->toArray();
 
         if (count($output) === 0) $output = array_merge($output, $response_array);
@@ -114,7 +116,7 @@ final class UserClient implements UserClientInterface
      */
     public function authored(): array
     {
-        $response = $this->client->request("GET", "$this->base_url/code-challenges/authored");
+        $response = $this->client->request("GET", $this->base_url . "/code-challenges/authored");
         $result = $response->toArray();
         return $result["data"];
     }

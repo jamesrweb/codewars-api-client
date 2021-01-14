@@ -38,7 +38,7 @@ final class CompletedChallengesSchema implements SchemaInterface
                 "id:string",
                 "name:string?",
                 "slug:string?",
-                "completedAt:dt",
+                "completedAt:string",
                 "completedLanguages:array" => "string"
             ]
         ]);

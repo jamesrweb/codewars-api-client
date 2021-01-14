@@ -47,7 +47,7 @@ final class ChallengeClient implements ChallengeClientInterface
      */
     public function challenge(string $id): array
     {
-        $response = $this->client->request("GET", "$this->base_url/$id");
+        $response = $this->client->request("GET", $this->base_url . "/" . $id);
         return $response->toArray();
     }
 
