@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Schemas;
 
+use CodewarsKataExporter\Interfaces\SchemaInterface;
 use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 
@@ -30,15 +31,15 @@ final class ChallengeSchema implements SchemaInterface
      *
      * @return Schema
      */
-    public function schema(): Schema
+    private function schema(): Schema
     {
         return Schema::parse([
             "id:string",
             "name:string",
             "slug:string",
             "category:string",
-            "publishedAt:dt",
-            "approvedAt:dt",
+            "publishedAt:string",
+            "approvedAt:string",
             "languages:array" => "string",
             "url:string",
             "rank:object" => [

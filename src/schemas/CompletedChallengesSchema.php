@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Schemas;
 
+use CodewarsKataExporter\Interfaces\SchemaInterface;
 use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 
 /**
- * Class AuthoredChallengesSchema
+ * Class CompletedChallengesSchema
  * @package CodewarsKataExporter\Schemas
  */
-final class AuthoredChallengesSchema implements SchemaInterface
+final class CompletedChallengesSchema implements SchemaInterface
 {
     /**
      * Validate the schema
@@ -30,17 +31,15 @@ final class AuthoredChallengesSchema implements SchemaInterface
      *
      * @return Schema
      */
-    public function schema(): Schema
+    private function schema(): Schema
     {
         return Schema::parse([
-            "data:array" => [
+            ":array" => [
                 "id:string",
-                "name:string",
-                "description:string",
-                "rank:int",
-                "rankName:string",
-                "tags:array" => "string",
-                "languages:array" => "string"
+                "name:string?",
+                "slug:string?",
+                "completedAt:string",
+                "completedLanguages:array" => "string"
             ]
         ]);
     }

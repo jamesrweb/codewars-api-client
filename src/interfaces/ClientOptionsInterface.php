@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter;
+namespace CodewarsKataExporter\Interfaces;
 
 /**
  * Interface ClientOptionsInterface
- * @package CodewarsKataExporter
+ * @package CodewarsKataExporter\Interfaces
  */
 interface ClientOptionsInterface
 {

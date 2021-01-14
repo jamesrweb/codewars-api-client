@@ -20,7 +20,7 @@ final class ClientOptionsTest extends TestCase
         $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"], $_ENV["CODEWARS_DUMMY_API_KEY"]);
     }
 
-    public function testHeadersGetter(): void
+    public function testHeaders(): void
     {
         $this->assertEquals(
             ["headers" => ["Authorization" => $_ENV["CODEWARS_DUMMY_API_KEY"]]],
@@ -28,7 +28,7 @@ final class ClientOptionsTest extends TestCase
         );
     }
 
-    public function testUsernameGetter(): void
+    public function testUsername(): void
     {
         $this->assertEquals($_ENV["CODEWARS_VALID_USERNAME"], $this->client_options->username());
     }

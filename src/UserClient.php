@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter;
 
+use CodewarsKataExporter\Interfaces\ClientOptionsInterface;
+use CodewarsKataExporter\Interfaces\UserClientInterface;
 use Symfony\Component\HttpClient\ScopingHttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -13,27 +15,24 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- * Class Client
+ * Class UserClient
  * @package CodewarsKataExporter
  */
-final class Client implements UserInterface, ChallengeInterface
+final class UserClient implements UserClientInterface
 {
     private HttpClientInterface $client;
     private string $base_url = "https://www.codewars.com/api/v1";
-    private string $challenge_url;
-    private string $user_url;
 
     /**
-     * Client constructor
+     * UserClient constructor
      *
      * @param HttpClientInterface $client
      * @param ClientOptionsInterface $options
      */
     public function __construct(HttpClientInterface $client, ClientOptionsInterface $options)
     {
-        $this->user_url = $this->base_url . "/users/" . $options->username();
-        $this->challenge_url = $this->base_url . "/code-challenges";
-        $this->client = ScopingHttpClient::forBaseUri($client, $this->user_url, $options->headers());
+        $this->base_url = $this->base_url . "/users/" . $options->username();
+        $this->client = ScopingHttpClient::forBaseUri($client, $this->base_url, $options->headers());
     }
 
     /**
@@ -46,9 +45,9 @@ final class Client implements UserInterface, ChallengeInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function userOverview(): array
+    public function user(): array
     {
-        $response = $this->client->request("GET", $this->user_url);
+        $response = $this->client->request("GET", $this->base_url);
         return $response->toArray();
     }
 
@@ -62,9 +61,10 @@ final class Client implements UserInterface, ChallengeInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function completedChallenges(): array
+    public function completed(): array
     {
-        return $this->completedChallengesHelper(1, []);
+        $result = $this->completedPaginationHelper(1, []);
+        return $result["data"];
     }
 
     /**
@@ -79,9 +79,10 @@ final class Client implements UserInterface, ChallengeInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    private function completedChallengesHelper(int $page, array $output): array
+    private function completedPaginationHelper(int $page, array $output): array
     {
-        $response = $this->client->request("GET", $this->user_url . "/code-challenges/completed?page=" . $page - 1);
+        $query = http_build_query(["page" => $page - 1]);
+        $response = $this->client->request("GET", $this->base_url . "/code-challenges/completed?" . $query);
         $response_array = $response->toArray();
 
         if (count($output) === 0) $output = array_merge($output, $response_array);
@@ -97,7 +98,7 @@ final class Client implements UserInterface, ChallengeInterface
                 }
             }
 
-            return $this->completedChallengesHelper($page + 1, $output);
+            return $this->completedPaginationHelper($page + 1, $output);
         }
 
         return $output;
@@ -113,26 +114,10 @@ final class Client implements UserInterface, ChallengeInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function authoredChallenges(): array
+    public function authored(): array
     {
-        $response = $this->client->request("GET", "$this->user_url/code-challenges/authored");
-        return $response->toArray();
-    }
-
-    /**
-     * Gets the information regarding a specific challenge by id
-     *
-     * @param string $id
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function challenge(string $id): array
-    {
-        $response = $this->client->request("GET", "$this->challenge_url/$id");
-        return $response->toArray();
+        $response = $this->client->request("GET", $this->base_url . "/code-challenges/authored");
+        $result = $response->toArray();
+        return $result["data"];
     }
 }

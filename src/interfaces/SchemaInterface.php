@@ -2,17 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Schemas;
-
-use Garden\Schema\Schema;
+namespace CodewarsKataExporter\Interfaces;
 
 /**
  * Interface SchemaInterface
- * @package CodewarsKataExporter\Schemas
+ * @package CodewarsKataExporter\Interfaces
  */
 interface SchemaInterface
 {
-    public function schema(): Schema;
-
     public function validate(array $data): bool;
 }

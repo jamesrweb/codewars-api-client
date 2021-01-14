@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Schemas;
 
+use CodewarsKataExporter\Interfaces\SchemaInterface;
 use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 
@@ -30,7 +31,7 @@ final class UserSchema implements SchemaInterface
      *
      * @return Schema
      */
-    public function schema(): Schema
+    private function schema(): Schema
     {
         return Schema::parse([
             "username:string",
