@@ -89,6 +89,47 @@ To get an overview of multiple challenges at once, you can run:
 $challenge_client->challenges(array $challenges);
 ```
 
+## Interfaces
+
+There are a number of interfaces exposed for you to use if required. These are namespaced under the `CodewarsKataExporter\Interfaces` namespace.
+
+### The `ClientOptionsInterface`
+
+This interface is for the methods required on the `ClientsOptions` class.
+
+## The `SchemaInterface`
+
+This interface is for the methods required on the items exported from the `CodewarsKataExporter\Schemas` namespace.
+
+## The `ChallengeClientInterface`
+
+This interface is for the methods required on the `ChallengeClient` class.
+
+## The `UserClientInterface`
+
+This interface is for the methods required on the `UserClient` class.
+
+## Schemas
+
+Schemas allow you to validate any data you may have or want. I have written the Schemas to validate responses from the Codewars API.
+
+Schemas exist under the `CodewarsKataExporter\Schemas` namespace and there are currently 4 schemas available for use:
+
+- The `AuthoredChallengesSchema` which validates the shape returned by the API for a set of challenges created by a user
+- The `CompletedChallengesSchema` which validates the shape returned by the API for a set of challenges completed by a user
+- The `ChallengeSchema` which validates the shape returned by the API for an individual challenge
+- The `UserSchema` which validates the shape returned by the API for a user
+
+You can of course create your own schemas by implementing a class of your own that adheres to the `SchemaInterface`, for example:
+
+```php
+use CodewarsKataExporter\Interfaces\SchemaInterface;
+
+final class MySchema implements SchemaInterface {
+    // Implement required methods here
+}
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
