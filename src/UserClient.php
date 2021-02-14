@@ -7,117 +7,53 @@ namespace CodewarsKataExporter;
 use CodewarsKataExporter\Interfaces\ClientOptionsInterface;
 use CodewarsKataExporter\Interfaces\UserClientInterface;
 use Symfony\Component\HttpClient\ScopingHttpClient;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-/**
- * Class UserClient
- * @package CodewarsKataExporter
- */
 final class UserClient implements UserClientInterface
 {
     private HttpClientInterface $client;
-    private string $base_url = "https://www.codewars.com/api/v1";
+    private string $base_url = 'https://www.codewars.com/api/v1/users';
 
-    /**
-     * UserClient constructor
-     *
-     * @param HttpClientInterface $client
-     * @param ClientOptionsInterface $options
-     */
     public function __construct(HttpClientInterface $client, ClientOptionsInterface $options)
     {
-        $this->base_url = $this->base_url . "/users/" . $options->username();
-        $this->client = ScopingHttpClient::forBaseUri($client, $this->base_url, $options->headers());
+        $this->client = ScopingHttpClient::forBaseUri(
+            $client,
+            $this->base_url,
+            $options->headers()
+        );
     }
 
-    /**
-     * Get an overview of the user
-     *
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function user(): array
+    public function user(string $username): array
     {
-        $response = $this->client->request("GET", $this->base_url);
-        return $response->toArray();
+        $url = "{$this->base_url}/{$username}";
+
+        return $this->client->request('GET', $url)->toArray();
     }
 
-    /**
-     * Get the completed challenges of the user
-     *
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function completed(): array
+    public function authored(string $username): array
     {
-        $result = $this->completedPaginationHelper(1, []);
-        return $result["data"];
+        $url = "{$this->base_url}/{$username}/code-challenges/authored";
+        $response = $this->client->request('GET', $url)->toArray();
+
+        return $response['data'];
     }
 
-    /**
-     * A recursive helper to get all completed challenge solutions accounting for pagination
-     *
-     * @param int $page
-     * @param array $output
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    private function completedPaginationHelper(int $page, array $output): array
+    public function completed(string $username): array
     {
-        $query = http_build_query(["page" => $page - 1]);
-        $response = $this->client->request("GET", $this->base_url . "/code-challenges/completed?" . $query);
-        $response_array = $response->toArray();
+        return $this->completedPaginationHelper($username);
+    }
 
-        if (count($output) === 0) $output = array_merge($output, $response_array);
+    private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
+    {
+        $query = http_build_query(['page' => $page - 1]);
+        $url = "{$this->base_url}/{$username}/code-challenges/completed?{$query}";
+        $response = $this->client->request('GET', $url)->toArray();
+        $output = array_merge($output, $response['data']);
 
-        if ($page <= $response_array["totalPages"]) {
-            $a = array_map("serialize", $output["data"]);
-            $b = array_map("serialize", $response_array["data"]);
-            $differences = array_diff($a, $b);
-
-            if (count($differences) > 0) {
-                foreach ($response_array["data"] as $item) {
-                    $output["data"][] = $item;
-                }
-            }
-
-            return $this->completedPaginationHelper($page + 1, $output);
+        if ($page < $response['totalPages']) {
+            return $this->completedPaginationHelper($username, ++$page, $output);
         }
 
         return $output;
-    }
-
-    /**
-     * Get the challenges that the user authored
-     *
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function authored(): array
-    {
-        $response = $this->client->request("GET", $this->base_url . "/code-challenges/authored");
-        $result = $response->toArray();
-        return $result["data"];
     }
 }

@@ -7,29 +7,20 @@ namespace CodewarsKataExporter\Tests;
 use CodewarsKataExporter\ClientOptions;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class ClientOptionsTest
- * @package CodewarsKataExporter\Tests
- */
 final class ClientOptionsTest extends TestCase
 {
-    private ClientOptions $client_options;
+    private ClientOptions $options;
 
     protected function setUp(): void
     {
-        $this->client_options = new ClientOptions($_ENV["CODEWARS_VALID_USERNAME"], $_ENV["CODEWARS_DUMMY_API_KEY"]);
+        $this->options = new ClientOptions($_ENV['CODEWARS_DUMMY_API_KEY']);
     }
 
     public function testHeaders(): void
     {
         $this->assertEquals(
-            ["headers" => ["Authorization" => $_ENV["CODEWARS_DUMMY_API_KEY"]]],
-            $this->client_options->headers()
+            ['headers' => ['Authorization' => $_ENV['CODEWARS_DUMMY_API_KEY']]],
+            $this->options->headers()
         );
-    }
-
-    public function testUsername(): void
-    {
-        $this->assertEquals($_ENV["CODEWARS_VALID_USERNAME"], $this->client_options->username());
     }
 }

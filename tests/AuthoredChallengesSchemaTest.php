@@ -4,48 +4,36 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Tests;
 
+use CodewarsKataExporter\Interfaces\SchemaInterface;
 use CodewarsKataExporter\Schemas\AuthoredChallengesSchema;
-use Garden\Schema\RefNotFoundException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class AuthoredChallengesSchemaTest
- * @package CodewarsKataExporter\Tests
- */
 final class AuthoredChallengesSchemaTest extends TestCase
 {
-    private AuthoredChallengesSchema $schema;
+    private SchemaInterface $schema;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->schema = new AuthoredChallengesSchema();
     }
 
-    /**
-     * @throws RefNotFoundException
-     */
     public function testValidateReturnsFalseWithMissingFields(): void
     {
-        $data = [["id" => base64_encode("id")]];
-        $this->assertEquals(false, $this->schema->validate($data));
+        $this->assertEquals(false, $this->schema->validate([['id' => base64_encode('id')]]));
     }
 
-    /**
-     * @throws RefNotFoundException
-     */
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
-        $data = [
+        $this->assertEquals(true, $this->schema->validate([
             [
-                "id" => base64_encode("id"),
-                "name" => "name",
-                "description" => "description",
-                "rank" => 1,
-                "rankName" => "rank",
-                "tags" => ["one", "two"],
-                "languages" => ["one", "two"]
-            ]
-        ];
-        $this->assertEquals(true, $this->schema->validate($data));
+                'id' => base64_encode('id'),
+                'name' => 'name',
+                'description' => 'description',
+                'rank' => 1,
+                'rankName' => 'rank',
+                'tags' => ['one', 'two'],
+                'languages' => ['one', 'two'],
+            ],
+        ]));
     }
 }

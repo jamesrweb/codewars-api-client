@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Interfaces;
 
-/**
- * Interface UserClientInterface
- * @package CodewarsKataExporter\Interfaces
- */
 interface UserClientInterface
 {
-    public function user(): array;
+    public function user(string $username): array;
 
-    public function completed(): array;
+    public function completed(string $username): array;
 
-    public function authored(): array;
+    public function authored(string $username): array;
 }

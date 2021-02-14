@@ -33,7 +33,7 @@ use CodewarsKataExporter\ClientOptions;
 use Symfony\Component\HttpClient\HttpClient;
 
 $http_client = HttpClient::create();
-$client_options = new ClientOptions("your-username", "your-api-key");
+$client_options = new ClientOptions("your-api-key");
 $user_client = new UserClient($http_client, $client_options);
 $challenge_client = new ChallengeClient($http_client, $client_options);
 ```
@@ -49,14 +49,14 @@ A `UserClient` instance allows us to get information regarding a user such as th
 To get information regarding the user, you can run:
 
 ```php
-$user_client->user();
+$user_client->user(string $username);
 ```
 
 #### Get challenges created by the user
 
 To get a list of challenges the user created, you can run:
 ```php
-$user_client->authored();
+$user_client->authored(string $username);
 ```
 
 #### Get challenges completed by the user
@@ -64,7 +64,7 @@ $user_client->authored();
 To get a list of challenges the user completed, you can run:
 
 ```php
-$user_client->completed();
+$user_client->completed(string $username);
 ```
 
 ## The `ChallengeClient`
@@ -78,7 +78,7 @@ A `ChallengeClient` instance allows us to get information regarding challenges s
 To get an overview regarding a specific challenge, you can run:
 
 ```php
-$challenge_client->challenge(string $challenge_id);
+$challenge_client->challenge(string $id);
 ```
 
 #### Get information about multiple challenges
@@ -86,7 +86,7 @@ $challenge_client->challenge(string $challenge_id);
 To get an overview of multiple challenges at once, you can run:
 
 ```php
-$challenge_client->challenges(array $challenges);
+$challenge_client->challenges(array $challenge_ids);
 ```
 
 ## Interfaces

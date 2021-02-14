@@ -28,6 +28,7 @@
   ],
   "scripts": {
     "generate:autoload": "composer dump-autoload -o",
+    "format": "php-cs-fixer fix --config .php_cs",
     "start": "php index.php",
     "test": "phpunit tests --testdox --configuration phpunit.xml",
     "test:watch": "phpunit-watcher watch tests --testdox --configuration phpunit.xml"
@@ -35,7 +36,9 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=7.4",
-    "symfony/http-client": "^5.2"
+    "symfony/http-client": "^5.2",
+    "friendsofphp/php-cs-fixer": "^2.18",
+    "madewithlove/php-cs-fixer-config": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",

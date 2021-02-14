@@ -5,61 +5,44 @@ declare(strict_types=1);
 namespace CodewarsKataExporter\Schemas;
 
 use CodewarsKataExporter\Interfaces\SchemaInterface;
-use Garden\Schema\RefNotFoundException;
 use Garden\Schema\Schema;
 
-/**
- * Class ChallengeSchema
- * @package CodewarsKataExporter\Schemas
- */
 final class ChallengeSchema implements SchemaInterface
 {
-    /**
-     * Validate the schema
-     *
-     * @param array $data
-     * @return bool
-     * @throws RefNotFoundException
-     */
     public function validate(array $data): bool
     {
         return $this->schema()->isValid($data);
     }
 
-    /**
-     * Get the schema used for validation
-     *
-     * @return Schema
-     */
     private function schema(): Schema
     {
         return Schema::parse([
-            "id:string",
-            "name:string",
-            "slug:string",
-            "category:string",
-            "publishedAt:string",
-            "approvedAt:string",
-            "languages:array" => "string",
-            "url:string",
-            "rank:object" => [
-                "id:int",
-                "name:string",
-                "color:string",
+            'id:string',
+            'name:string',
+            'slug:string',
+            'category:string',
+            'publishedAt:string',
+            'approvedAt:string',
+            'languages:array' => 'string',
+            'url:string',
+            'rank:object' => [
+                'id:int',
+                'name:string',
+                'color:string',
             ],
-            "createdBy:object" => [
-                "username:string",
-                "url:string"
+            'createdBy:object' => [
+                'username:string',
+                'url:string',
             ],
-            "approvedBy:object" => [
-                "username:string",
-                "url:string"
+            'approvedBy:object' => [
+                'username:string',
+                'url:string',
             ],
-            "description:string",
-            "totalAttempts:int",
-            "totalCompleted:int",
-            "totalStars:int",
-            "tags:array" => "string"
+            'description:string',
+            'totalAttempts:int',
+            'totalCompleted:int',
+            'totalStars:int',
+            'tags:array' => 'string',
         ]);
     }
 }
