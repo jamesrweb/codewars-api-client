@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Update composer.lock
       run: composer update
@@ -34,20 +36,14 @@ jobs:
     - name: Generate autoload files
       run: composer run-script generate:autoload
 
-  format:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
     - name: Format files
       run: composer run-script format
-  
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+
+    - name: Commit formatting changes
+      uses: stefanzweifel/git-auto-commit-action@v4.1.2
+      with:
+        commit_message: Apply formatting changes
+        branch: ${{ github.head_ref }}
 
     - name: Run test suite
       run: composer run-script test
