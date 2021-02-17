@@ -19,19 +19,17 @@ final class UserSchemaTest extends TestCase
 
     public function testValidateReturnsFalseWithEmptyArrayGiven(): void
     {
-        $data = [];
-        $this->assertEquals(false, $this->schema->validate($data));
+        $this->assertEquals(false, $this->schema->validate([]));
     }
 
     public function testValidateReturnsFalseWithMissingFields(): void
     {
-        $data = ['username' => $_ENV['CODEWARS_VALID_USERNAME']];
-        $this->assertEquals(false, $this->schema->validate($data));
+        $this->assertEquals(false, $this->schema->validate(['username' => $_ENV['CODEWARS_VALID_USERNAME']]));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
-        $data = [
+        $this->assertEquals(true, $this->schema->validate([
             'username' => $_ENV['CODEWARS_VALID_USERNAME'],
             'name' => 'name',
             'honor' => 1,
@@ -58,7 +56,6 @@ final class UserSchemaTest extends TestCase
                 'totalAuthored' => 1,
                 'totalCompleted' => 1,
             ],
-        ];
-        $this->assertEquals(true, $this->schema->validate($data));
+        ]));
     }
 }

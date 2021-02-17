@@ -36,6 +36,18 @@ jobs:
     - name: Generate autoload files
       run: composer run-script generate:autoload
 
+    - name: Commit composer.lock updates
+      uses: stefanzweifel/git-auto-commit-action@v4.1.2
+      with:
+        commit_message: Apply composer.lock updates
+        branch: ${{ github.head_ref }}
+
+    - name: Lint files
+      run: composer run-script lint
+
+    - name: Run test suite
+      run: composer run-script test
+
     - name: Format files
       run: composer run-script format
 
@@ -44,6 +56,3 @@ jobs:
       with:
         commit_message: Apply formatting changes
         branch: ${{ github.head_ref }}
-
-    - name: Run test suite
-      run: composer run-script test
