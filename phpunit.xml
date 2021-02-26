@@ -12,7 +12,7 @@
     <logging/>
     <php>
         <env name="CODEWARS_VALID_USERNAME" value="jamesrweb" />
-        <env name="CODEWARS_INVALID_USERNAME" value="aW52YWxpZA==" />
+        <env name="CODEWARS_INVALID_USERNAME" value="xaW52YWxpZA==" />
         <env name="CODEWARS_DUMMY_API_KEY" value="bWFkZS11cC1rZXk=" />
         <env name="CODEWARS_VALID_CHALLENGE_ID" value="5277c8a221e209d3f6000b56" />
         <env name="CODEWARS_INVALID_CHALLENGE_ID" value="aW52YWxpZC1jaGFsbGVuZ2UtaWQ=" />
