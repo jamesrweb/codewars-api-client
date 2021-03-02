@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace CodewarsKataExporter\Tests;
 
+use CodewarsKataExporter\Client;
 use CodewarsKataExporter\ClientOptions;
-use CodewarsKataExporter\Interfaces\UserClientInterface;
+use CodewarsKataExporter\Interfaces\ClientInterface;
 use CodewarsKataExporter\Schemas\AuthoredChallengesSchema;
+use CodewarsKataExporter\Schemas\ChallengeSchema;
 use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
 use CodewarsKataExporter\Schemas\UserSchema;
-use CodewarsKataExporter\UserClient;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpClient\HttpClient;
 
-final class UserClientTest extends TestCase
+final class ClientTest extends TestCase
 {
-    private UserClientInterface $client;
+    private ClientInterface $client;
 
     protected function setUp(): void
     {
-        $http_client = HttpClient::create();
-        $client_options = new ClientOptions($_ENV['CODEWARS_DUMMY_API_KEY']);
-        $this->client = new UserClient($http_client, $client_options);
+        $options = new ClientOptions($_ENV['CODEWARS_DUMMY_API_KEY']);
+        $this->client = new Client($options);
     }
 
     public function testUser(): void
@@ -40,5 +39,19 @@ final class UserClientTest extends TestCase
     {
         $response = $this->client->authored($_ENV['CODEWARS_VALID_USERNAME']);
         $this->assertEquals(true, (new AuthoredChallengesSchema())->validate($response));
+    }
+
+    public function testChallenge(): void
+    {
+        $response = $this->client->challenge($_ENV['CODEWARS_VALID_CHALLENGE_ID']);
+        $this->assertEquals(true, (new ChallengeSchema())->validate($response));
+    }
+
+    public function testChallenges(): void
+    {
+        $challenge = ['id' => $_ENV['CODEWARS_VALID_CHALLENGE_ID']];
+        $response = $this->client->challenges([$challenge]);
+        $candidate = array_shift($response);
+        $this->assertEquals(true, (new ChallengeSchema())->validate($candidate));
     }
 }

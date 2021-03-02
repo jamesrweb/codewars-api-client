@@ -27,20 +27,16 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
-use CodewarsKataExporter\UserClient;
-use CodewarsKataExporter\ChallengeClient;
+use CodewarsKataExporter\Client;
 use CodewarsKataExporter\ClientOptions;
-use Symfony\Component\HttpClient\HttpClient;
 
-$http_client = HttpClient::create();
 $client_options = new ClientOptions("your-api-key");
-$user_client = new UserClient($http_client, $client_options);
-$challenge_client = new ChallengeClient($http_client, $client_options);
+$client = new Client($client_options);
 ```
 
-## The `UserClient`
+## The `Client`
 
-A `UserClient` instance allows us to get information regarding a user such as their completed challenges, authored challenges and metadata such as their username, ranks, etc.
+A `Client` instance allows us to interact with the codewars API in a consistent manner.
 
 ### Methods
 
@@ -49,14 +45,14 @@ A `UserClient` instance allows us to get information regarding a user such as th
 To get information regarding the user, you can run:
 
 ```php
-$user_client->user(string $username);
+$client->user(string $username);
 ```
 
 #### Get challenges created by the user
 
 To get a list of challenges the user created, you can run:
 ```php
-$user_client->authored(string $username);
+$client->authored(string $username);
 ```
 
 #### Get challenges completed by the user
@@ -64,21 +60,15 @@ $user_client->authored(string $username);
 To get a list of challenges the user completed, you can run:
 
 ```php
-$user_client->completed(string $username);
+$client->completed(string $username);
 ```
-
-## The `ChallengeClient`
-
-A `ChallengeClient` instance allows us to get information regarding challenges such as challenge descriptions, difficulties, available languages, etc.
-
-### Methods
 
 #### Get information about a specific challenge
 
 To get an overview regarding a specific challenge, you can run:
 
 ```php
-$challenge_client->challenge(string $id);
+$client->challenge(string $id);
 ```
 
 #### Get information about multiple challenges
@@ -86,7 +76,7 @@ $challenge_client->challenge(string $id);
 To get an overview of multiple challenges at once, you can run:
 
 ```php
-$challenge_client->challenges(array $challenge_ids);
+$client->challenges(array $ids);
 ```
 
 ## Interfaces
@@ -95,19 +85,15 @@ There are a number of interfaces exposed for you to use if required. These are n
 
 ### The `ClientOptionsInterface`
 
-This interface is for the methods required on the `ClientsOptions` class.
+This interface is for the methods that are accessible to use via a `ClientsOptions` instance.
 
 ### The `SchemaInterface`
 
 This interface is for the methods required on the items exported from the `CodewarsKataExporter\Schemas` namespace.
 
-### The `ChallengeClientInterface`
+### The `ClientInterface`
 
-This interface is for the methods required on the `ChallengeClient` class.
-
-### The `UserClientInterface`
-
-This interface is for the methods required on the `UserClient` class.
+This interface is for the methods that are accessible to use via a `Client` instance.
 
 ## Schemas
 
@@ -116,8 +102,8 @@ Schemas allow you to validate any data you may have or want. I have written the 
 Schemas exist under the `CodewarsKataExporter\Schemas` namespace and there are currently 4 schemas available for use:
 
 - The `AuthoredChallengesSchema` which validates the shape returned by the API for a set of challenges created by a user
-- The `CompletedChallengesSchema` which validates the shape returned by the API for a set of challenges completed by a user
 - The `ChallengeSchema` which validates the shape returned by the API for an individual challenge
+- The `CompletedChallengesSchema` which validates the shape returned by the API for a set of challenges completed by a user
 - The `UserSchema` which validates the shape returned by the API for a user
 
 You can of course create your own schemas by implementing a class of your own that adheres to the `SchemaInterface`, for example:

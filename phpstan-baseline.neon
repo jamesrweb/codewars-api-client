@@ -1,19 +1,49 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method CodewarsKataExporter\\\\ChallengeClient\\:\\:challenge\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:user\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/ChallengeClient.php
+			path: src/Client.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\ChallengeClient\\:\\:challenges\\(\\) has parameter \\$challenges with no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:authored\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/ChallengeClient.php
+			path: src/Client.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\ChallengeClient\\:\\:challenges\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:completed\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/ChallengeClient.php
+			path: src/Client.php
+
+		-
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:completedPaginationHelper\\(\\) has parameter \\$output with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:completedPaginationHelper\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:challenge\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:challenges\\(\\) has parameter \\$challenges with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:challenges\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Method CodewarsKataExporter\\\\Client\\:\\:parse\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Client.php
 
 		-
 			message: "#^Method CodewarsKataExporter\\\\ClientOptions\\:\\:headers\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -21,44 +51,34 @@ parameters:
 			path: src/ClientOptions.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\UserClient\\:\\:user\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientInterface\\:\\:challenge\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/UserClient.php
+			path: src/interfaces/ClientInterface.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\UserClient\\:\\:authored\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientInterface\\:\\:challenges\\(\\) has parameter \\$challenges with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/UserClient.php
+			path: src/interfaces/ClientInterface.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\UserClient\\:\\:completed\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientInterface\\:\\:challenges\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/UserClient.php
+			path: src/interfaces/ClientInterface.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\UserClient\\:\\:completedPaginationHelper\\(\\) has parameter \\$output with no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientInterface\\:\\:user\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/UserClient.php
+			path: src/interfaces/ClientInterface.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\UserClient\\:\\:completedPaginationHelper\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientInterface\\:\\:completed\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/UserClient.php
+			path: src/interfaces/ClientInterface.php
 
 		-
-			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ChallengeClientInterface\\:\\:challenge\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientInterface\\:\\:authored\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/interfaces/ChallengeClientInterface.php
-
-		-
-			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ChallengeClientInterface\\:\\:challenges\\(\\) has parameter \\$challenges with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/interfaces/ChallengeClientInterface.php
-
-		-
-			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ChallengeClientInterface\\:\\:challenges\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/interfaces/ChallengeClientInterface.php
+			path: src/interfaces/ClientInterface.php
 
 		-
 			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\ClientOptionsInterface\\:\\:headers\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -69,21 +89,6 @@ parameters:
 			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\SchemaInterface\\:\\:validate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/interfaces/SchemaInterface.php
-
-		-
-			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\UserClientInterface\\:\\:user\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/interfaces/UserClientInterface.php
-
-		-
-			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\UserClientInterface\\:\\:completed\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/interfaces/UserClientInterface.php
-
-		-
-			message: "#^Method CodewarsKataExporter\\\\Interfaces\\\\UserClientInterface\\:\\:authored\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/interfaces/UserClientInterface.php
 
 		-
 			message: "#^Method CodewarsKataExporter\\\\Schemas\\\\AuthoredChallengesSchema\\:\\:validate\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
