@@ -87,7 +87,6 @@ final class Client implements ClientInterface
     private function request(string $method, string $uri): ResponseInterface
     {
         $headers = $this->client_options->headers();
-
         $request = array_reduce(
             array_keys($headers),
             function (RequestInterface $accumulator, string $current) use ($headers): RequestInterface {
