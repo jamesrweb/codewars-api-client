@@ -6,29 +6,29 @@ namespace CodewarsKataExporter;
 
 use CodewarsKataExporter\Interfaces\ClientInterface;
 use CodewarsKataExporter\Interfaces\ClientOptionsInterface;
-use GuzzleHttp\Client as HTTPClient;
-use GuzzleHttp\Promise\Utils;
-use GuzzleHttp\Psr7\Request;
-use Http\Adapter\Guzzle7\Client as GuzzleAdapter;
-use Http\Promise\Promise;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Http\Client\ClientInterface as Psr18ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpClient\Psr18Client;
 
 final class Client implements ClientInterface
 {
-    private GuzzleAdapter $client;
+    private Psr18ClientInterface $psr18Client;
+    private RequestFactoryInterface $psr17Factory;
+    private ClientOptionsInterface $request_options;
+    private string $base_url = 'https://www.codewars.com/api/v1';
 
     public function __construct(ClientOptionsInterface $options)
     {
-        $client = new HTTPClient([
-            'base_uri' => 'https://www.codewars.com/api/v1/',
-            'headers' => $options->headers(),
-        ]);
-        $this->client = new GuzzleAdapter($client);
+        $this->request_options = $options;
+        $this->psr18Client = new Psr18Client();
+        $this->psr17Factory = new Psr17Factory();
     }
 
     public function user(string $username): array
     {
-        $url = "users/{$username}";
+        $url = "{$this->base_url}/users/{$username}";
         $response = $this->request('GET', $url);
 
         return $this->parse($response);
@@ -36,7 +36,7 @@ final class Client implements ClientInterface
 
     public function authored(string $username): array
     {
-        $url = "users/{$username}/code-challenges/authored";
+        $url = "{$this->base_url}/users/{$username}/code-challenges/authored";
         $response = $this->request('GET', $url);
         $body = $this->parse($response);
 
@@ -51,7 +51,7 @@ final class Client implements ClientInterface
     private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
     {
         $query = http_build_query(['page' => $page - 1]);
-        $response = $this->request('GET', "users/{$username}/code-challenges/completed?{$query}");
+        $response = $this->request('GET', "{$this->base_url}/users/{$username}/code-challenges/completed?{$query}");
         $body = $this->parse($response);
         $output = array_merge($output, $body['data']);
 
@@ -64,38 +64,31 @@ final class Client implements ClientInterface
 
     public function challenge(string $id): array
     {
-        $response = $this->request('GET', "code-challenges/{$id}");
+        $response = $this->request('GET', "{$this->base_url}/code-challenges/{$id}");
 
         return $this->parse($response);
     }
 
     public function challenges(array $challenges): array
     {
-        $requests = array_reduce($challenges, function (array $accumulator, array $current): array {
+        return array_reduce($challenges, function (array $accumulator, array $current): array {
             $id = $current['id'];
-            $accumulator[] = $this->requestAsync('GET', "code-challenges/{$id}");
+            $response = $this->request('GET', "{$this->base_url}/code-challenges/{$id}");
+            $accumulator[] = $this->parse($response);
 
             return $accumulator;
         }, []);
-
-        return array_map(
-            fn (ResponseInterface $response) => $this->parse($response),
-            Utils::unwrap($requests)
-        );
     }
 
     private function request(string $method, string $url): ResponseInterface
     {
-        $request = new Request($method, $url);
+        $request = $this->psr17Factory->createRequest($method, $url);
 
-        return $this->client->sendRequest($request);
-    }
+        foreach ($this->request_options->headers() as $header => $value) {
+            $request = $request->withHeader($header, $value);
+        }
 
-    private function requestAsync(string $method, string $url): Promise
-    {
-        $request = new Request($method, $url);
-
-        return $this->client->sendAsyncRequest($request);
+        return $this->psr18Client->sendRequest($request);
     }
 
     private function parse(ResponseInterface $response): array

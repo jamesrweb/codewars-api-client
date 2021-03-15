@@ -14,6 +14,9 @@ final class ClientOptions implements ClientOptionsInterface
 
     public function headers(): array
     {
-        return ['headers' => ['Authorization' => $this->api_key]];
+        return [
+            'Authorization' => $this->api_key,
+            'Accept' => 'application/json',
+        ];
     }
 }

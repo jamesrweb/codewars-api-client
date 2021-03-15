@@ -19,7 +19,10 @@ final class ClientOptionsTest extends TestCase
     public function testHeaders(): void
     {
         $this->assertEquals(
-            ['headers' => ['Authorization' => $_ENV['CODEWARS_DUMMY_API_KEY']]],
+            [
+                'Authorization' => $_ENV['CODEWARS_DUMMY_API_KEY'],
+                'Accept' => 'application/json',
+            ],
             $this->options->headers()
         );
     }
