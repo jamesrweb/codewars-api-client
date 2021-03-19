@@ -50,18 +50,20 @@
     "madewithlove/php-cs-fixer-config": "^2.0",
     "phpstan/phpstan": "^0.12.76",
     "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan-strict-rules": "^0.12.9"
+    "phpstan/phpstan-strict-rules": "^0.12.9",
+    "nette/schema": "^1.2"
   },
   "autoload": {
     "psr-4": {
       "CodewarsApiClient\\": "src/",
-      "CodewarsApiClient\\Interfaces\\": "src/interfaces/",
-      "CodewarsApiClient\\Schemas\\": "src/schemas/"
+      "CodewarsApiClient\\Interfaces\\": "src/interfaces/"
     }
   },
   "autoload-dev": {
+    "files": ["src/helpers/regex.php"],
     "psr-4": {
-      "CodewarsApiClient\\Tests\\": "tests/"
+      "CodewarsApiClient\\Tests\\": "tests/",
+      "CodewarsApiClient\\Schemas\\": "src/schemas/"
     }
   }
 }

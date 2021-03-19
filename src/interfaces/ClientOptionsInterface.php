@@ -6,5 +6,8 @@ namespace CodewarsApiClient\Interfaces;
 
 interface ClientOptionsInterface
 {
+    /**
+     * @return array<string, string>
+     */
     public function headers(): array;
 }

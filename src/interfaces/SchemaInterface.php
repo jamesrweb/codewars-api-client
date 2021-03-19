@@ -6,5 +6,8 @@ namespace CodewarsApiClient\Interfaces;
 
 interface SchemaInterface
 {
+    /**
+     * @param array<mixed> $data
+     */
     public function validate(array $data): bool;
 }

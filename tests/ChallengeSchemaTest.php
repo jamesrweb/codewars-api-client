@@ -34,8 +34,8 @@ final class ChallengeSchemaTest extends TestCase
             'name' => 'challenge',
             'slug' => 'some-thing',
             'category' => 'test',
-            'publishedAt' => date('d/m/Y h:i:s a', time()),
-            'approvedAt' => date('d/m/Y h:i:s a', time()),
+            'publishedAt' => date(DATE_ISO8601),
+            'approvedAt' => date(DATE_ISO8601),
             'languages' => ['one', 'two'],
             'url' => 'https://example.com',
             'rank' => [

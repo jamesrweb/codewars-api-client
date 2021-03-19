@@ -3,7 +3,5 @@ parameters:
 	paths:
 		- ../../src
 		- ../../tests
-	ignoreErrors:
-		- '#Dynamic call to static method PHPUnit\\Framework\\.*#'
 includes:
-	- ./phpstan-baseline.neon
+	- phpstan-baseline.neon

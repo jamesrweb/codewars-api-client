@@ -4,26 +4,22 @@ declare(strict_types=1);
 
 namespace CodewarsApiClient\Schemas;
 
-use CodewarsApiClient\Interfaces\SchemaInterface;
-use Garden\Schema\Schema;
+use function CodewarsApiClient\Helpers\ISO8601_pattern;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
-final class CompletedChallengesSchema implements SchemaInterface
+final class CompletedChallengesSchema extends AbstractSchema
 {
-    public function validate(array $data): bool
+    protected function schema(): Schema
     {
-        return $this->schema()->isValid($data);
-    }
-
-    private function schema(): Schema
-    {
-        return Schema::parse([
-            ':array' => [
-                'id:string',
-                'name:string?',
-                'slug:string?',
-                'completedAt:string',
-                'completedLanguages:array' => 'string',
-            ],
+        $completed_challenge = Expect::structure([
+            'id' => Expect::string()->required(),
+            'name' => Expect::string()->required(),
+            'slug' => Expect::string()->required(),
+            'completedAt' => Expect::string()->pattern(ISO8601_pattern())->required(),
+            'completedLanguages' => Expect::arrayOf(Expect::string())->required(),
         ]);
+
+        return Expect::arrayOf($completed_challenge);
     }
 }

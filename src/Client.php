@@ -52,6 +52,11 @@ final class Client implements CodewarsClientInterface
         return $this->completedPaginationHelper($username);
     }
 
+    /**
+     * @param array<mixed> $output
+     *
+     * @return array<mixed>
+     */
     private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
     {
         $uri = "{$this->base_uri}/users/{$username}/code-challenges/completed";
@@ -74,6 +79,9 @@ final class Client implements CodewarsClientInterface
         return $this->parse($response);
     }
 
+    /**
+     * @param array<string> $challenges
+     */
     public function challenges(array $challenges): array
     {
         return array_map(
@@ -82,6 +90,9 @@ final class Client implements CodewarsClientInterface
         );
     }
 
+    /**
+     * @param array<string, string | int> $query_params
+     */
     private function request(string $method, string $uri, array $query_params = []): ResponseInterface
     {
         $query_string = http_build_query($query_params, '', '&', PHP_QUERY_RFC3986);
@@ -99,6 +110,9 @@ final class Client implements CodewarsClientInterface
         return $this->psr18Client->sendRequest($request);
     }
 
+    /**
+     * @return array<mixed>
+     */
     private function parse(ResponseInterface $response): array
     {
         return json_decode($response->getBody()->getContents(), true);

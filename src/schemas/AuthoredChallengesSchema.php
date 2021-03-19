@@ -4,28 +4,21 @@ declare(strict_types=1);
 
 namespace CodewarsApiClient\Schemas;
 
-use CodewarsApiClient\Interfaces\SchemaInterface;
-use Garden\Schema\Schema;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
-final class AuthoredChallengesSchema implements SchemaInterface
+final class AuthoredChallengesSchema extends AbstractSchema
 {
-    public function validate(array $data): bool
+    protected function schema(): Schema
     {
-        return $this->schema()->isValid($data);
-    }
-
-    private function schema(): Schema
-    {
-        return Schema::parse([
-            ':array' => [
-                'id:string',
-                'name:string',
-                'description:string',
-                'rank:int',
-                'rankName:string',
-                'tags:array' => 'string',
-                'languages:array' => 'string',
-            ],
-        ]);
+        return Expect::arrayOf(Expect::structure([
+            'id' => Expect::string()->required(),
+            'name' => Expect::string()->required(),
+            'description' => Expect::string()->required(),
+            'rank' => Expect::int()->required(),
+            'rankName' => Expect::string()->required(),
+            'tags' => Expect::arrayOf(Expect::string())->required(),
+            'languages' => Expect::arrayOf(Expect::string())->required(),
+        ]));
     }
 }

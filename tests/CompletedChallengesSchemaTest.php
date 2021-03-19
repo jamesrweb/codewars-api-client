@@ -29,7 +29,7 @@ final class CompletedChallengesSchemaTest extends TestCase
                 'id' => base64_encode('id'),
                 'name' => 'name',
                 'slug' => 'some-thing',
-                'completedAt' => date('d/m/Y h:i:s a', time()),
+                'completedAt' => date(DATE_ISO8601),
                 'completedLanguages' => ['one', 'two'],
             ],
         ]));
