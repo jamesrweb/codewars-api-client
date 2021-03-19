@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Tests;
+namespace CodewarsApiClient\Tests;
 
-use CodewarsKataExporter\ClientOptions;
+use CodewarsApiClient\ClientOptions;
 use PHPUnit\Framework\TestCase;
 
 final class ClientOptionsTest extends TestCase

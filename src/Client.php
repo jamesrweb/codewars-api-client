@@ -2,29 +2,32 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter;
+namespace CodewarsApiClient;
 
-use CodewarsKataExporter\Interfaces\ClientInterface;
-use CodewarsKataExporter\Interfaces\ClientOptionsInterface;
+use CodewarsApiClient\Interfaces\ClientInterface as CodewarsClientInterface;
+use CodewarsApiClient\Interfaces\ClientOptionsInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use Psr\Http\Client\ClientInterface as Psr18ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpClient\Psr18Client;
 
-final class Client implements ClientInterface
+final class Client implements CodewarsClientInterface
 {
-    private Psr18ClientInterface $psr18Client;
+    private ClientInterface $psr18Client;
     private RequestFactoryInterface $psr17Factory;
     private ClientOptionsInterface $client_options;
     private string $base_uri = 'https://www.codewars.com/api/v1';
 
-    public function __construct(ClientOptionsInterface $options)
-    {
+    public function __construct(
+        ClientOptionsInterface $options,
+        ?ClientInterface $http_client = null,
+        ?RequestFactoryInterface $http_factory = null
+    ) {
         $this->client_options = $options;
-        $this->psr18Client = new Psr18Client();
-        $this->psr17Factory = new Psr17Factory();
+        $this->psr18Client = $http_client ?? new Psr18Client();
+        $this->psr17Factory = $http_factory ?? new Psr17Factory();
     }
 
     public function user(string $username): array
@@ -51,9 +54,8 @@ final class Client implements ClientInterface
 
     private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
     {
-        $query = http_build_query(['page' => $page - 1]);
-        $uri = "{$this->base_uri}/users/{$username}/code-challenges/completed?{$query}";
-        $response = $this->request('GET', $uri);
+        $uri = "{$this->base_uri}/users/{$username}/code-challenges/completed";
+        $response = $this->request('GET', $uri, ['page' => $page - 1]);
         $body = $this->parse($response);
         $output = array_merge($output, $body['data']);
 
@@ -74,25 +76,27 @@ final class Client implements ClientInterface
 
     public function challenges(array $challenges): array
     {
-        return array_reduce($challenges, function (array $accumulator, array $current): array {
-            $id = $current['id'];
+        return array_map(function (array $challenge): array {
+            $id = $challenge['id'];
             $uri = "{$this->base_uri}/code-challenges/{$id}";
             $response = $this->request('GET', $uri);
-            $accumulator[] = $this->parse($response);
 
-            return $accumulator;
-        }, []);
+            return $this->parse($response);
+        }, $challenges);
     }
 
-    private function request(string $method, string $uri): ResponseInterface
+    private function request(string $method, string $uri, array $query_params = []): ResponseInterface
     {
+        $query_string = http_build_query($query_params, '', '&', PHP_QUERY_RFC3986);
+        $request_uri = "{$uri}?{$query_string}";
         $headers = $this->client_options->headers();
         $request = array_reduce(
             array_keys($headers),
-            function (RequestInterface $accumulator, string $current) use ($headers): RequestInterface {
-                return $accumulator->withHeader($current, $headers[$current]);
-            },
-            $this->psr17Factory->createRequest($method, $uri)
+            fn (RequestInterface $accumulator, string $current) => $accumulator->withHeader(
+                $current,
+                $headers[$current]
+            ),
+            $this->psr17Factory->createRequest($method, $request_uri)
         );
 
         return $this->psr18Client->sendRequest($request);

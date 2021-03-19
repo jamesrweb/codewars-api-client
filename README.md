@@ -1,10 +1,10 @@
 # Codewars Kata Exporter
 
-[![Test coverage](https://img.shields.io/badge/test%20coverage-100%25-brightgreen.svg)](https://github.com/jamesrweb/codewars-kata-exporter)
-[![GitHub license](https://img.shields.io/github/license/jamesrweb/codewars-kata-exporter.svg)](https://github.com/jamesrweb/codewars-kata-exporter/blob/master/LICENSE)
-[![GitHub contributors](https://img.shields.io/github/contributors/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/graphs/contributors/)
-[![GitHub issues](https://img.shields.io/github/issues/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/issues/)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/jamesrweb/codewars-kata-exporter.svg)](https://GitHub.com/jamesrweb/codewars-kata-exporter/pulls/)
+[![Test coverage](https://img.shields.io/badge/test%20coverage-100%25-brightgreen.svg)](https://github.com/jamesrweb/codewars-api-client)
+[![GitHub license](https://img.shields.io/github/license/jamesrweb/codewars-api-client.svg)](https://github.com/jamesrweb/codewars-api-client/blob/master/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/jamesrweb/codewars-api-client.svg)](https://GitHub.com/jamesrweb/codewars-api-client/graphs/contributors/)
+[![GitHub issues](https://img.shields.io/github/issues/jamesrweb/codewars-api-client.svg)](https://GitHub.com/jamesrweb/codewars-api-client/issues/)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/jamesrweb/codewars-api-client.svg)](https://GitHub.com/jamesrweb/codewars-api-client/pulls/)
 
 A library built to interact with the Codewars API and platform.
 
@@ -13,7 +13,7 @@ A library built to interact with the Codewars API and platform.
 Use the package manager [composer](https://getcomposer.org/) to install the library using the following command.
 
 ```bash
-composer require jamesrweb/codewars-kata-exporter
+composer require jamesrweb/codewars-api-client
 ```
 
 ## Basic Usage
@@ -27,8 +27,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
-use CodewarsKataExporter\Client;
-use CodewarsKataExporter\ClientOptions;
+use CodewarsApiClient\Client;
+use CodewarsApiClient\ClientOptions;
 
 $client_options = new ClientOptions("your-api-key");
 $client = new Client($client_options);
@@ -81,7 +81,7 @@ $client->challenges(array $ids);
 
 ## Interfaces
 
-There are a number of interfaces exposed for you to use if required. These are namespaced under the `CodewarsKataExporter\Interfaces` namespace.
+There are a number of interfaces exposed for you to use if required. These are namespaced under the `CodewarsApiClient\Interfaces` namespace.
 
 ### The `ClientOptionsInterface`
 
@@ -89,7 +89,7 @@ This interface is for the methods that are accessible to use via a `ClientsOptio
 
 ### The `SchemaInterface`
 
-This interface is for the methods required on the items exported from the `CodewarsKataExporter\Schemas` namespace.
+This interface is for the methods required on the items exported from the `CodewarsApiClient\Schemas` namespace.
 
 ### The `ClientInterface`
 
@@ -99,7 +99,7 @@ This interface is for the methods that are accessible to use via a `Client` inst
 
 Schemas allow you to validate any data you may have or want. I have written the Schemas to validate responses from the Codewars API.
 
-Schemas exist under the `CodewarsKataExporter\Schemas` namespace and there are currently 4 schemas available for use:
+Schemas exist under the `CodewarsApiClient\Schemas` namespace and there are currently 4 schemas available for use:
 
 - The `AuthoredChallengesSchema` which validates the shape returned by the API for a set of challenges created by a user
 - The `ChallengeSchema` which validates the shape returned by the API for an individual challenge
@@ -109,7 +109,7 @@ Schemas exist under the `CodewarsKataExporter\Schemas` namespace and there are c
 You can of course create your own schemas by implementing a class of your own that adheres to the `SchemaInterface`, for example:
 
 ```php
-use CodewarsKataExporter\Interfaces\SchemaInterface;
+use CodewarsApiClient\Interfaces\SchemaInterface;
 
 final class MySchema implements SchemaInterface {
     // Implement required methods here

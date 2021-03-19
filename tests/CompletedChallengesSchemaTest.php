@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Tests;
+namespace CodewarsApiClient\Tests;
 
-use CodewarsKataExporter\Interfaces\SchemaInterface;
-use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
+use CodewarsApiClient\Interfaces\SchemaInterface;
+use CodewarsApiClient\Schemas\CompletedChallengesSchema;
 use PHPUnit\Framework\TestCase;
 
 final class CompletedChallengesSchemaTest extends TestCase

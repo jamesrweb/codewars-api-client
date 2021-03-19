@@ -1,6 +1,6 @@
 {
-  "name": "jamesrweb/codewars-kata-exporter",
-  "description": "A wrapper for the Codewars API",
+  "name": "jamesrweb/codewars-api-client",
+  "description": "A client for the Codewars API",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -8,7 +8,7 @@
     "api-client"
   ],
   "readme": "README.md",
-  "homepage": "https://jamesrweb.github.io/codewars-kata-exporter/",
+  "homepage": "https://jamesrweb.github.io/codewars-api-client",
   "repositories": [
     {
       "type": "composer",
@@ -16,7 +16,7 @@
     },
     {
       "type": "vcs",
-      "url": "https://github.com/jamesrweb/codewars-kata-exporter"
+      "url": "https://github.com/jamesrweb/codewars-api-client"
     }
   ],
   "authors": [
@@ -54,14 +54,14 @@
   },
   "autoload": {
     "psr-4": {
-      "CodewarsKataExporter\\": "src/",
-      "CodewarsKataExporter\\Interfaces\\": "src/interfaces/",
-      "CodewarsKataExporter\\Schemas\\": "src/schemas/"
+      "CodewarsApiClient\\": "src/",
+      "CodewarsApiClient\\Interfaces\\": "src/interfaces/",
+      "CodewarsApiClient\\Schemas\\": "src/schemas/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "CodewarsKataExporter\\Tests\\": "tests/"
+      "CodewarsApiClient\\Tests\\": "tests/"
     }
   }
 }

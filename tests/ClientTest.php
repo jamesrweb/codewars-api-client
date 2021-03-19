@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Tests;
+namespace CodewarsApiClient\Tests;
 
-use CodewarsKataExporter\Client;
-use CodewarsKataExporter\ClientOptions;
-use CodewarsKataExporter\Interfaces\ClientInterface;
-use CodewarsKataExporter\Schemas\AuthoredChallengesSchema;
-use CodewarsKataExporter\Schemas\ChallengeSchema;
-use CodewarsKataExporter\Schemas\CompletedChallengesSchema;
-use CodewarsKataExporter\Schemas\UserSchema;
+use CodewarsApiClient\Client;
+use CodewarsApiClient\ClientOptions;
+use CodewarsApiClient\Interfaces\ClientInterface;
+use CodewarsApiClient\Schemas\AuthoredChallengesSchema;
+use CodewarsApiClient\Schemas\ChallengeSchema;
+use CodewarsApiClient\Schemas\CompletedChallengesSchema;
+use CodewarsApiClient\Schemas\UserSchema;
 use PHPUnit\Framework\TestCase;
 
 final class ClientTest extends TestCase

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter;
+namespace CodewarsApiClient;
 
-use CodewarsKataExporter\Interfaces\ClientOptionsInterface;
+use CodewarsApiClient\Interfaces\ClientOptionsInterface;
 
 final class ClientOptions implements ClientOptionsInterface
 {

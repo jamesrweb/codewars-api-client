@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Schemas;
+namespace CodewarsApiClient\Schemas;
 
-use CodewarsKataExporter\Interfaces\SchemaInterface;
+use CodewarsApiClient\Interfaces\SchemaInterface;
 use Garden\Schema\Schema;
 
 final class UserSchema implements SchemaInterface

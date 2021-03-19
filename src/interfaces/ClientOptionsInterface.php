@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsKataExporter\Interfaces;
+namespace CodewarsApiClient\Interfaces;
 
 interface ClientOptionsInterface
 {
