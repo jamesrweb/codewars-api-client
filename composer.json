@@ -27,11 +27,11 @@
   ],
   "scripts": {
     "generate:autoload": "composer dump-autoload -o",
-    "generate:lint-baseline": "phpstan analyse -c phpstan.neon --generate-baseline",
-    "lint": "phpstan analyse -c phpstan.neon",
-    "format": "php-cs-fixer fix --config .php_cs",
-    "start": "php index.php",
-    "test": "phpunit tests --testdox --configuration phpunit.xml",
+    "generate:lint-baseline": "phpstan analyse -c ./config/phpstan/phpstan.neon --generate-baseline",
+    "lint": "phpstan analyse -c ./config/phpstan/phpstan.neon",
+    "format": "php-cs-fixer fix --config ./config/php-cs-fixer/.php_cs --using-cache no",
+    "start": "php -t public -S localhost:8080",
+    "test": "phpunit tests --testdox --configuration ./config/phpunit/phpunit.xml",
     "test:watch": "phpunit-watcher watch tests --testdox --configuration phpunit.xml"
   },
   "minimum-stability": "stable",

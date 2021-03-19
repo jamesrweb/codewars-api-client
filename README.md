@@ -124,4 +124,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+This project uses [an MIT license](https://choosealicense.com/licenses/mit/). If you wish to view [the license](https://github.com/jamesrweb/codewars-api-client/blob/master/LICENSE), it can be found in the project root.
