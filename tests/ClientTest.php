@@ -49,8 +49,7 @@ final class ClientTest extends TestCase
 
     public function testChallenges(): void
     {
-        $challenge = ['id' => $_ENV['CODEWARS_VALID_CHALLENGE_ID']];
-        $response = $this->client->challenges([$challenge]);
+        $response = $this->client->challenges([$_ENV['CODEWARS_VALID_CHALLENGE_ID']]);
         $candidate = array_shift($response);
         $this->assertEquals(true, (new ChallengeSchema())->validate($candidate));
     }

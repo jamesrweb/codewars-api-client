@@ -76,13 +76,10 @@ final class Client implements CodewarsClientInterface
 
     public function challenges(array $challenges): array
     {
-        return array_map(function (array $challenge): array {
-            $id = $challenge['id'];
-            $uri = "{$this->base_uri}/code-challenges/{$id}";
-            $response = $this->request('GET', $uri);
-
-            return $this->parse($response);
-        }, $challenges);
+        return array_map(
+            fn (string $id) => $this->challenge($id),
+            $challenges
+        );
     }
 
     private function request(string $method, string $uri, array $query_params = []): ResponseInterface
