@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92a5060d97a4238a77e883d81b699d57",
+    "content-hash": "6083e6582ee668b624dd957350860512",
     "packages": [
         {
             "name": "nyholm/psr7",
@@ -5357,49 +5357,6 @@
                 }
             ],
             "time": "2020-07-12T23:59:07+00:00"
-        },
-        {
-            "name": "vanilla/garden-schema",
-            "version": "v2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vanilla/garden-schema.git",
-                "reference": "17da87a83d15d45cfedc4d27cf800618160e1cbf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vanilla/garden-schema/zipball/17da87a83d15d45cfedc4d27cf800618160e1cbf",
-                "reference": "17da87a83d15d45cfedc4d27cf800618160e1cbf",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Garden\\Schema\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Todd Burry",
-                    "email": "todd@vanillaforums.com"
-                }
-            ],
-            "description": "A simple data validation and cleaning library based on JSON Schema.",
-            "support": {
-                "issues": "https://github.com/vanilla/garden-schema/issues",
-                "source": "https://github.com/vanilla/garden-schema/tree/v2.2"
-            },
-            "time": "2019-03-03T13:29:22+00:00"
         },
         {
             "name": "webmozart/assert",

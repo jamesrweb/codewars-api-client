@@ -45,7 +45,6 @@
   "require-dev": {
     "phpunit/phpunit": "^9",
     "spatie/phpunit-watcher": "^1.23",
-    "vanilla/garden-schema": "^2.2",
     "friendsofphp/php-cs-fixer": "^2.18",
     "madewithlove/php-cs-fixer-config": "^2.0",
     "phpstan/phpstan": "^0.12.76",
