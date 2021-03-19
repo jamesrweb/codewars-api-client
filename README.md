@@ -1,4 +1,4 @@
-# Codewars Kata Exporter
+# Codewars API Client
 
 [![Test coverage](https://img.shields.io/badge/test%20coverage-100%25-brightgreen.svg)](https://github.com/jamesrweb/codewars-api-client)
 [![GitHub license](https://img.shields.io/github/license/jamesrweb/codewars-api-client.svg)](https://github.com/jamesrweb/codewars-api-client/blob/master/LICENSE)
