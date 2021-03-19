@@ -76,7 +76,7 @@ $client->challenge(string $id);
 To get an overview of multiple challenges at once, you can run:
 
 ```php
-$client->challenges(array $ids);
+$client->challenges(array<string> $ids);
 ```
 
 ## Interfaces
