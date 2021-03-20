@@ -13,6 +13,9 @@ use CodewarsApiClient\Schemas\CompletedChallengesSchema;
 use CodewarsApiClient\Schemas\UserSchema;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 final class ClientTest extends TestCase
 {
     private ClientInterface $client;
@@ -52,5 +55,11 @@ final class ClientTest extends TestCase
         $response = $this->client->challenges([$_ENV['CODEWARS_VALID_CHALLENGE_ID']]);
         $candidate = array_shift($response);
         $this->assertEquals(true, (new ChallengeSchema())->validate($candidate));
+    }
+
+    public function testClientReturnsEmptyArrayWhen404(): void
+    {
+        $response = $this->client->user($_ENV['CODEWARS_INVALID_USERNAME']);
+        $this->assertEquals([], $response);
     }
 }

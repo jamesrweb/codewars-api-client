@@ -7,6 +7,9 @@ namespace CodewarsApiClient\Tests;
 use CodewarsApiClient\ClientOptions;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 final class ClientOptionsTest extends TestCase
 {
     private ClientOptions $options;

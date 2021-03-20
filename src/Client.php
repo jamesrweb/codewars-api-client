@@ -7,9 +7,9 @@ namespace CodewarsApiClient;
 use CodewarsApiClient\Interfaces\ClientInterface as CodewarsClientInterface;
 use CodewarsApiClient\Interfaces\ClientOptionsInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpClient\Psr18Client;
 
@@ -30,57 +30,47 @@ final class Client implements CodewarsClientInterface
         $this->psr17Factory = $http_factory ?? new Psr17Factory();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function user(string $username): array
     {
         $uri = "{$this->base_uri}/users/{$username}";
-        $response = $this->request('GET', $uri);
 
-        return $this->parse($response);
+        return $this->request('GET', $uri);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authored(string $username): array
     {
         $uri = "{$this->base_uri}/users/{$username}/code-challenges/authored";
-        $response = $this->request('GET', $uri);
-        $body = $this->parse($response);
+        $data = $this->request('GET', $uri);
 
-        return $body['data'];
+        return $data['data'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function completed(string $username): array
     {
         return $this->completedPaginationHelper($username);
     }
 
     /**
-     * @param array<mixed> $output
-     *
-     * @return array<mixed>
+     * {@inheritdoc}
      */
-    private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
-    {
-        $uri = "{$this->base_uri}/users/{$username}/code-challenges/completed";
-        $response = $this->request('GET', $uri, ['page' => $page - 1]);
-        $body = $this->parse($response);
-        $output = array_merge($output, $body['data']);
-
-        if ($page < $body['totalPages']) {
-            return $this->completedPaginationHelper($username, ++$page, $output);
-        }
-
-        return $output;
-    }
-
     public function challenge(string $id): array
     {
         $uri = "{$this->base_uri}/code-challenges/{$id}";
-        $response = $this->request('GET', $uri);
 
-        return $this->parse($response);
+        return $this->request('GET', $uri);
     }
 
     /**
-     * @param array<string> $challenges
+     * {@inheritdoc}
      */
     public function challenges(array $challenges): array
     {
@@ -91,27 +81,53 @@ final class Client implements CodewarsClientInterface
     }
 
     /**
-     * @param array<string, string | int> $query_params
+     * Read through pagination to collect all completed challenges for a given user.
+     *
+     * @param array<mixed> $output
+     *
+     * @return array<mixed>
      */
-    private function request(string $method, string $uri, array $query_params = []): ResponseInterface
+    private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
     {
-        $query_string = http_build_query($query_params, '', '&', PHP_QUERY_RFC3986);
-        $request_uri = "{$uri}?{$query_string}";
-        $headers = $this->client_options->headers();
-        $request = array_reduce(
-            array_keys($headers),
-            fn (RequestInterface $accumulator, string $current) => $accumulator->withHeader(
-                $current,
-                $headers[$current]
-            ),
-            $this->psr17Factory->createRequest($method, $request_uri)
-        );
+        $uri = "{$this->base_uri}/users/{$username}/code-challenges/completed";
+        $data = $this->request('GET', $uri, ['page' => $page - 1]);
+        $output = array_merge($output, $data['data']);
 
-        return $this->psr18Client->sendRequest($request);
+        if ($page < $data['totalPages']) {
+            return $this->completedPaginationHelper($username, ++$page, $output);
+        }
+
+        return $output;
     }
 
     /**
-     * @return array<mixed>
+     * Send an http request and return formatted data.
+     *
+     * @param array<string, string | int> $query_params
+     *
+     * @throws ClientExceptionInterface
+     *
+     * @return array<string, mixed>
+     */
+    private function request(string $method, string $uri, array $query_params = []): array
+    {
+        $query_string = http_build_query(data: $query_params, encoding_type: PHP_QUERY_RFC3986);
+        $request_uri = "{$uri}?{$query_string}";
+        $request = $this->psr17Factory->createRequest($method, $request_uri);
+
+        foreach ($this->client_options->headers() as $key => $value) {
+            $request = $request->withHeader($key, $value);
+        }
+
+        $response = $this->psr18Client->sendRequest($request);
+
+        return $response->getStatusCode() !== 404 ? $this->parse($response) : [];
+    }
+
+    /**
+     * Parse a given response into JSON format.
+     *
+     * @return array<string, mixed>
      */
     private function parse(ResponseInterface $response): array
     {

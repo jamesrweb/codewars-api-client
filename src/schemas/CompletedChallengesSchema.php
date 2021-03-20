@@ -10,6 +10,9 @@ use Nette\Schema\Schema;
 
 final class CompletedChallengesSchema extends AbstractSchema
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function schema(): Schema
     {
         $completed_challenge = Expect::structure([

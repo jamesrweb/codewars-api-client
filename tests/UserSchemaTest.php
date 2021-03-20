@@ -8,6 +8,9 @@ use CodewarsApiClient\Interfaces\SchemaInterface;
 use CodewarsApiClient\Schemas\UserSchema;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 final class UserSchemaTest extends TestCase
 {
     private SchemaInterface $schema;

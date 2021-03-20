@@ -9,6 +9,9 @@ use Nette\Schema\Schema;
 
 final class UserSchema extends AbstractSchema
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function schema(): Schema
     {
         return Expect::structure([

@@ -12,7 +12,7 @@ use Nette\Schema\ValidationException;
 abstract class AbstractSchema implements SchemaInterface
 {
     /**
-     * @param array<mixed> $data
+     * {@inheritdoc}
      */
     public function validate(array $data): bool
     {
@@ -25,5 +25,8 @@ abstract class AbstractSchema implements SchemaInterface
         }
     }
 
+    /**
+     * Returns the internal schema to be validated against.
+     */
     abstract protected function schema(): Schema;
 }

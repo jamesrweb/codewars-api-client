@@ -12,6 +12,9 @@ final class ClientOptions implements ClientOptionsInterface
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function headers(): array
     {
         return [
