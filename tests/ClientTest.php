@@ -7,10 +7,10 @@ namespace CodewarsApiClient\Tests;
 use CodewarsApiClient\Client;
 use CodewarsApiClient\ClientOptions;
 use CodewarsApiClient\Interfaces\ClientInterface;
-use CodewarsApiClient\Schemas\AuthoredChallengesSchema;
-use CodewarsApiClient\Schemas\ChallengeSchema;
-use CodewarsApiClient\Schemas\CompletedChallengesSchema;
-use CodewarsApiClient\Schemas\UserSchema;
+use CodewarsApiClient\Tests\Schemas\AuthoredChallengesSchema;
+use CodewarsApiClient\Tests\Schemas\ChallengeSchema;
+use CodewarsApiClient\Tests\Schemas\CompletedChallengesSchema;
+use CodewarsApiClient\Tests\Schemas\UserSchema;
 use PHPUnit\Framework\TestCase;
 
 /**

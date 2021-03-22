@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Schemas;
+namespace CodewarsApiClient\Tests\Schemas;
 
 use function CodewarsApiClient\Helpers\ISO8601_pattern;
 use Nette\Schema\Expect;

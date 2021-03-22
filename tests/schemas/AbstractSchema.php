@@ -2,12 +2,21 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Schemas;
+namespace CodewarsApiClient\Tests\Schemas;
 
-use CodewarsApiClient\Interfaces\SchemaInterface;
 use Nette\Schema\Processor;
 use Nette\Schema\Schema;
 use Nette\Schema\ValidationException;
+
+interface SchemaInterface
+{
+    /**
+     * Validate provided data against the schema.
+     *
+     * @param array<mixed> $data
+     */
+    public function validate(array $data): bool;
+}
 
 abstract class AbstractSchema implements SchemaInterface
 {

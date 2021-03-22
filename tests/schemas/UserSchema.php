@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Schemas;
+namespace CodewarsApiClient\Tests\Schemas;
 
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;

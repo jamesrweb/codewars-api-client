@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace CodewarsApiClient\Tests;
 
-use CodewarsApiClient\Interfaces\SchemaInterface;
-use CodewarsApiClient\Schemas\AuthoredChallengesSchema;
+use CodewarsApiClient\Tests\Fixtures\ResponseFactory;
+use CodewarsApiClient\Tests\Fixtures\ResponseFactoryInterface;
+use CodewarsApiClient\Tests\Schemas\AuthoredChallengesSchema;
+use CodewarsApiClient\Tests\Schemas\SchemaInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,29 +16,23 @@ use PHPUnit\Framework\TestCase;
 final class AuthoredChallengesSchemaTest extends TestCase
 {
     private SchemaInterface $schema;
+    private ResponseFactoryInterface $responses;
 
     protected function setUp(): void
     {
         $this->schema = new AuthoredChallengesSchema();
+        $this->responses = new ResponseFactory();
     }
 
     public function testValidateReturnsFalseWithMissingFields(): void
     {
-        $this->assertEquals(false, $this->schema->validate([['id' => base64_encode('id')]]));
+        $authored = $this->responses->partial_authored_challenge();
+        $this->assertEquals(false, $this->schema->validate($authored));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
-        $this->assertEquals(true, $this->schema->validate([
-            [
-                'id' => base64_encode('id'),
-                'name' => 'name',
-                'description' => 'description',
-                'rank' => 1,
-                'rankName' => 'rank',
-                'tags' => ['one', 'two'],
-                'languages' => ['one', 'two'],
-            ],
-        ]));
+        $authored = $this->responses->valid_authored_challenge();
+        $this->assertEquals(true, $this->schema->validate($authored));
     }
 }

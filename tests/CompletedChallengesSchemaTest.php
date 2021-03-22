@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace CodewarsApiClient\Tests;
 
-use CodewarsApiClient\Interfaces\SchemaInterface;
-use CodewarsApiClient\Schemas\CompletedChallengesSchema;
+use CodewarsApiClient\Tests\Fixtures\ResponseFactory;
+use CodewarsApiClient\Tests\Fixtures\ResponseFactoryInterface;
+use CodewarsApiClient\Tests\Schemas\CompletedChallengesSchema;
+use CodewarsApiClient\Tests\Schemas\SchemaInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,27 +16,23 @@ use PHPUnit\Framework\TestCase;
 final class CompletedChallengesSchemaTest extends TestCase
 {
     private SchemaInterface $schema;
+    private ResponseFactoryInterface $responses;
 
     protected function setUp(): void
     {
         $this->schema = new CompletedChallengesSchema();
+        $this->responses = new ResponseFactory();
     }
 
     public function testValidateReturnsFalseWithMissingFields(): void
     {
-        $this->assertEquals(false, $this->schema->validate([['id' => base64_encode('id')]]));
+        $completed = $this->responses->partial_completed_challenge();
+        $this->assertEquals(false, $this->schema->validate($completed));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
-        $this->assertEquals(true, $this->schema->validate([
-            [
-                'id' => base64_encode('id'),
-                'name' => 'name',
-                'slug' => 'some-thing',
-                'completedAt' => date(DATE_ISO8601),
-                'completedLanguages' => ['one', 'two'],
-            ],
-        ]));
+        $completed = $this->responses->valid_completed_challenge();
+        $this->assertEquals(true, $this->schema->validate($completed));
     }
 }

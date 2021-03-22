@@ -87,10 +87,6 @@ There are a number of interfaces exposed for you to use if required. These are n
 
 This interface is for the methods that are accessible to use via a `ClientsOptions` instance.
 
-### The `SchemaInterface`
-
-This interface is for the methods required on the items exported from the `CodewarsApiClient\Schemas` namespace.
-
 ### The `ClientInterface`
 
 This interface is for the methods that are accessible to use via a `Client` instance.
