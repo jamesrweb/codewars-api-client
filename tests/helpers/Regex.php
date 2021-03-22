@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Helpers;
+namespace CodewarsApiClient\Tests\Helpers;
 
 /**
  * Generate the Regex string for an ISO-8601 compatible date.

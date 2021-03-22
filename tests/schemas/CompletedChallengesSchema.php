@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CodewarsApiClient\Tests\Schemas;
 
-use function CodewarsApiClient\Helpers\ISO8601_pattern;
+use function CodewarsApiClient\Tests\Helpers\ISO8601_pattern;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 
