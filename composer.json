@@ -62,6 +62,7 @@
     "files": ["tests/helpers/Regex.php"],
     "psr-4": {
       "CodewarsApiClient\\Tests\\": "tests/",
+      "CodewarsApiClient\\Tests\\Fixtures\\\\": "tests/fixtures/",
       "CodewarsApiClient\\Tests\\Helpers\\": "tests/helpers/",
       "CodewarsApiClient\\Tests\\Schemas\\": "tests/schemas/"
     }
