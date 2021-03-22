@@ -54,13 +54,16 @@
   },
   "autoload": {
     "psr-4": {
-      "CodewarsApiClient\\": "src/"
+      "CodewarsApiClient\\": "src/",
+      "CodewarsApiClient\\Interfaces\\": "src/interfaces/"
     }
   },
   "autoload-dev": {
     "files": ["tests/helpers/Regex.php"],
     "psr-4": {
-      "CodewarsApiClient\\Tests\\": "tests/"
+      "CodewarsApiClient\\Tests\\": "tests/",
+      "CodewarsApiClient\\Helpers\\": "tests/helpers/",
+      "CodewarsApiClient\\Schemas\\": "tests/schemas/"
     }
   }
 }
