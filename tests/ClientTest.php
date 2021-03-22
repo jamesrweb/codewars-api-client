@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Tests;
+namespace Tests;
 
 use CodewarsApiClient\Client;
 use CodewarsApiClient\ClientOptions;
 use CodewarsApiClient\Interfaces\ClientInterface;
-use CodewarsApiClient\Tests\Schemas\AuthoredChallengesSchema;
-use CodewarsApiClient\Tests\Schemas\ChallengeSchema;
-use CodewarsApiClient\Tests\Schemas\CompletedChallengesSchema;
-use CodewarsApiClient\Tests\Schemas\UserSchema;
 use PHPUnit\Framework\TestCase;
+use Tests\Schemas\AuthoredChallengesSchema;
+use Tests\Schemas\ChallengeSchema;
+use Tests\Schemas\CompletedChallengesSchema;
+use Tests\Schemas\UserSchema;
 
 /**
  * @internal

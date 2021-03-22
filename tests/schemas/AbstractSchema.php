@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Tests\Schemas;
+namespace Tests\Schemas;
 
 use Nette\Schema\Processor;
 use Nette\Schema\Schema;

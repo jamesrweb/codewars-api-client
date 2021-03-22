@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Tests;
+namespace Tests;
 
-use CodewarsApiClient\Tests\Fixtures\ResponseFactory;
-use CodewarsApiClient\Tests\Fixtures\ResponseFactoryInterface;
-use CodewarsApiClient\Tests\Schemas\SchemaInterface;
-use CodewarsApiClient\Tests\Schemas\UserSchema;
 use PHPUnit\Framework\TestCase;
+use Tests\Fixtures\ResponseFactory;
+use Tests\Fixtures\ResponseFactoryInterface;
+use Tests\Schemas\SchemaInterface;
+use Tests\Schemas\UserSchema;
 
 /**
  * @internal

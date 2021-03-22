@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Tests;
+namespace Tests;
 
 use CodewarsApiClient\ClientOptions;
 use PHPUnit\Framework\TestCase;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodewarsApiClient\Tests\Fixtures;
+namespace Tests\Fixtures;
 
 interface ResponseFactoryInterface
 {
