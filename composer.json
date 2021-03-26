@@ -59,7 +59,8 @@
   "autoload-dev": {
     "files": ["tests/Helpers/Regex.php"],
     "psr-4": {
-      "Tests\\": "tests/"
+      "Tests\\": "tests/",
+      "Tests\\Fixtures\\\\": "tests/Fixtures/"
     }
   }
 }
