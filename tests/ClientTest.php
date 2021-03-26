@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests;
 
 use CodewarsApiClient\Client;
-use CodewarsApiClient\ClientOptions;
 use CodewarsApiClient\Interfaces\ClientInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\Schemas\AuthoredChallengesSchema;

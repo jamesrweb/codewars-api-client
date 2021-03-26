@@ -124,8 +124,8 @@ final class Client implements CodewarsApiClientInterface
     }
 
     /**
-     * Generate the headers for each request made by the client
-     * 
+     * Generate the headers for each request made by the client.
+     *
      * @return array<string, string>
      */
     private function headers(): array

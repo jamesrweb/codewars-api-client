@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace CodewarsApiClient\Interfaces;
 
-interface UserInterface {
+interface UserInterface
+{
     /**
      * Get information about a given user.
      *
