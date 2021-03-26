@@ -28,10 +28,8 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use CodewarsApiClient\Client;
-use CodewarsApiClient\ClientOptions;
 
-$client_options = new ClientOptions("your-api-key");
-$client = new Client($client_options);
+$client = new Client("your-api-key");
 ```
 
 ## The `Client`
@@ -83,13 +81,17 @@ $client->challenges(array<string> $ids);
 
 There are a number of interfaces exposed for you to use if required. These are namespaced under the `CodewarsApiClient\Interfaces` namespace.
 
-### The `ClientOptionsInterface`
+### The `ChallengeInterface`
 
-This interface is for the methods that are accessible to use via a `ClientsOptions` instance.
+This interface is for the methods that access challenge specific data.
+
+### The `UserInterface`
+
+This interface is for the methods that access user specific data.
 
 ### The `ClientInterface`
 
-This interface is for the methods that are accessible to use via a `Client` instance.
+This interface is for the methods that are accessible to use via a `Client` instance and is contains all methods defined in the `ChallengeInterface` and `UserInterface` interfaces.
 
 ## Contributing
 
