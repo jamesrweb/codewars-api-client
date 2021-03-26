@@ -3,5 +3,5 @@ parameters:
 	paths:
 		- ../../src
 		- ../../tests
-includes:
-	- phpstan-baseline.neon
+	ignoreErrors:
+		- "#^Dynamic call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertEquals\\(\\)\\.$#"
