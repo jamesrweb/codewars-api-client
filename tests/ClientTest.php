@@ -22,8 +22,7 @@ final class ClientTest extends TestCase
 
     protected function setUp(): void
     {
-        $options = new ClientOptions($_ENV['CODEWARS_DUMMY_API_KEY']);
-        $this->client = new Client($options);
+        $this->client = new Client($_ENV['CODEWARS_DUMMY_API_KEY']);
     }
 
     public function testUser(): void
