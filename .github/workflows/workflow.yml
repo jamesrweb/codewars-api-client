@@ -15,7 +15,7 @@ jobs:
         ref: ${{ github.head_ref }}
 
     - name: Update composer.lock
-      run: composer update
+      run: composer update --no-install --no-autoloader --no-progress
 
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -31,10 +31,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress
-
-    - name: Generate autoload files
-      run: composer run-script generate:autoload
+      run: composer install --prefer-dist --no-progress --optimize-autoloader
 
     - name: Commit composer.lock updates
       uses: stefanzweifel/git-auto-commit-action@v4.1.2
