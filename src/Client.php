@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CodewarsApiClient;
 
 use CodewarsApiClient\Interfaces\ClientInterface as CodewarsApiClientInterface;
+use JsonException;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use function Safe\json_decode;
 use Symfony\Component\HttpClient\Psr18Client;
 
 final class Client implements CodewarsApiClientInterface
@@ -143,6 +145,10 @@ final class Client implements CodewarsApiClientInterface
      */
     private function parse(ResponseInterface $response): array
     {
-        return json_decode($response->getBody()->getContents(), true);
+        try {
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (JsonException $e) {
+            return [];
+        }
     }
 }
