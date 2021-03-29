@@ -26,7 +26,6 @@
     }
   ],
   "scripts": {
-    "generate:lint-baseline": "phpstan analyse -c ./config/phpstan/phpstan.neon --generate-baseline",
     "lint": "phpstan analyse -c ./config/phpstan/phpstan.neon",
     "format": "php-cs-fixer fix --config ./config/php-cs-fixer/.php_cs --using-cache no",
     "start": "php -t public -S localhost:8080",
