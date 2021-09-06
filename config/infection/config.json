@@ -1,0 +1,37 @@
+{
+    "source": {
+        "directories": ["src"]
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "var/log/mutation/infection.log",
+        "summary": "var/log/mutation/summary.log",
+        "json": "var/log/mutation/infection-log.json",
+        "perMutator": "var/log/mutation/per-mutator.md",
+        "github": true,
+        "badge": {
+            "branch": "master"
+        }
+    },
+    "mutators": {
+        "@default": true,
+        "Coalesce": false,
+        "DecrementInteger": false,
+        "IncrementInteger": false,
+        "Minus": false,
+        "ArrayItemRemoval": false,
+        "LessThanNegotiation": false,
+        "LessThan": false,
+        "Foreach_": false,
+        "UnwrapArrayMerge": false,
+        "ArrayOneItem": false,
+        "Increment": false
+    },
+    "tmpDir": "../../var/tmp",
+    "phpUnit": {
+        "configDir": "../php-unit"
+    },
+    "minMsi": 95,
+    "minCoveredMsi": 100,
+    "testFramework":"phpunit"
+}

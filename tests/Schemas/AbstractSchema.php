@@ -23,7 +23,7 @@ abstract class AbstractSchema implements SchemaInterface
     /**
      * {@inheritdoc}
      */
-    public function validate(array $data): bool
+    final public function validate(array $data): bool
     {
         try {
             (new Processor())->process($this->schema(), $data);

@@ -4,4 +4,6 @@ parameters:
 		- ../../src
 		- ../../tests
 	ignoreErrors:
-		- "#^Dynamic call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertEquals\\(\\)\\.$#"
+		- "#^Dynamic call to static method PHPUnit.*$#"
+includes:
+	- ../../vendor/phpstan/phpstan/conf/bleedingEdge.neon

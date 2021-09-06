@@ -14,6 +14,8 @@ use Tests\Schemas\UserSchema;
 
 /**
  * @internal
+ *
+ * @small
  */
 final class ClientTest extends TestCase
 {
@@ -27,37 +29,37 @@ final class ClientTest extends TestCase
     public function testUser(): void
     {
         $response = $this->client->user($_ENV['CODEWARS_VALID_USERNAME']);
-        $this->assertEquals(true, (new UserSchema())->validate($response));
+        $this->assertTrue((new UserSchema())->validate($response));
     }
 
     public function testCompletedChallenges(): void
     {
         $response = $this->client->completed($_ENV['CODEWARS_VALID_USERNAME']);
-        $this->assertEquals(true, (new CompletedChallengesSchema())->validate($response));
+        $this->assertTrue((new CompletedChallengesSchema())->validate($response));
     }
 
     public function testAuthoredChallenges(): void
     {
         $response = $this->client->authored($_ENV['CODEWARS_VALID_USERNAME']);
-        $this->assertEquals(true, (new AuthoredChallengesSchema())->validate($response));
+        $this->assertTrue((new AuthoredChallengesSchema())->validate($response));
     }
 
     public function testChallenge(): void
     {
         $response = $this->client->challenge($_ENV['CODEWARS_VALID_CHALLENGE_ID']);
-        $this->assertEquals(true, (new ChallengeSchema())->validate($response));
+        $this->assertTrue((new ChallengeSchema())->validate($response));
     }
 
     public function testChallenges(): void
     {
         $response = $this->client->challenges([$_ENV['CODEWARS_VALID_CHALLENGE_ID']]);
         $candidate = array_shift($response);
-        $this->assertEquals(true, (new ChallengeSchema())->validate($candidate));
+        $this->assertTrue((new ChallengeSchema())->validate($candidate));
     }
 
     public function testClientReturnsEmptyArrayWhen404(): void
     {
         $response = $this->client->user($_ENV['CODEWARS_INVALID_USERNAME']);
-        $this->assertEquals([], $response);
+        $this->assertSame([], $response);
     }
 }

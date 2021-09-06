@@ -12,6 +12,8 @@ use Tests\Schemas\UserSchema;
 
 /**
  * @internal
+ *
+ * @small
  */
 final class UserSchemaTest extends TestCase
 {
@@ -27,18 +29,18 @@ final class UserSchemaTest extends TestCase
     public function testValidateReturnsFalseWithEmptyArrayGiven(): void
     {
         $user = $this->responses->empty();
-        $this->assertEquals(false, $this->schema->validate($user));
+        $this->assertFalse($this->schema->validate($user));
     }
 
     public function testValidateReturnsFalseWithMissingFields(): void
     {
         $user = $this->responses->partial_user();
-        $this->assertEquals(false, $this->schema->validate($user));
+        $this->assertFalse($this->schema->validate($user));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $user = $this->responses->valid_user();
-        $this->assertEquals(true, $this->schema->validate($user));
+        $this->assertTrue($this->schema->validate($user));
     }
 }
