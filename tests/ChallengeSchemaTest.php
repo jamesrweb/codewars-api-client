@@ -12,6 +12,8 @@ use Tests\Schemas\SchemaInterface;
 
 /**
  * @internal
+ *
+ * @small
  */
 final class ChallengeSchemaTest extends TestCase
 {
@@ -27,18 +29,18 @@ final class ChallengeSchemaTest extends TestCase
     public function testValidateReturnsFalseWithEmptyArrayGiven(): void
     {
         $challenge = $this->responses->empty();
-        $this->assertEquals(false, $this->schema->validate($challenge));
+        $this->assertFalse($this->schema->validate($challenge));
     }
 
     public function testValidateReturnsFalseWithMissingFields(): void
     {
         $challenge = $this->responses->partial_challenge();
-        $this->assertEquals(false, $this->schema->validate($challenge));
+        $this->assertFalse($this->schema->validate($challenge));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $challenge = $this->responses->valid_challenge();
-        $this->assertEquals(true, $this->schema->validate($challenge));
+        $this->assertTrue($this->schema->validate($challenge));
     }
 }

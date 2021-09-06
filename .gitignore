@@ -1,6 +1,7 @@
 .idea/
 vendor/
 coverage/
+var/
 .env
 *.cache
 *.bak

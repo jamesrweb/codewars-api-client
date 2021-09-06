@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
     steps:
     - uses: actions/checkout@v2
       with:
@@ -20,15 +24,6 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --optimize-autoloader
@@ -39,14 +34,11 @@ jobs:
         commit_message: Apply composer.lock updates
         branch: ${{ github.head_ref }}
 
-    - name: Lint files
-      run: composer run-script lint
-
-    - name: Run test suite
-      run: composer run-script test
-
-    - name: Format files
-      run: composer run-script format
+    - name: Lint, Format and Test Files
+      run: composer run-script ci
+      env:
+        INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
+        STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
     - name: Commit formatting changes
       uses: stefanzweifel/git-auto-commit-action@v4.1.2

@@ -12,6 +12,8 @@ use Tests\Schemas\SchemaInterface;
 
 /**
  * @internal
+ *
+ * @small
  */
 final class AuthoredChallengesSchemaTest extends TestCase
 {
@@ -27,12 +29,12 @@ final class AuthoredChallengesSchemaTest extends TestCase
     public function testValidateReturnsFalseWithMissingFields(): void
     {
         $authored = $this->responses->partial_authored_challenge();
-        $this->assertEquals(false, $this->schema->validate($authored));
+        $this->assertFalse($this->schema->validate($authored));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $authored = $this->responses->valid_authored_challenge();
-        $this->assertEquals(true, $this->schema->validate($authored));
+        $this->assertTrue($this->schema->validate($authored));
     }
 }

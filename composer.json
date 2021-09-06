@@ -1,14 +1,33 @@
 {
-  "name": "jamesrweb/codewars-api-client",
+  "authors": [
+    {
+      "email": "james@jamesrobb.co.uk",
+      "name": "James Robb"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "CodewarsApiClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "files": [
+      "tests/Helpers/Regex.php"
+    ],
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "description": "A client for the Codewars API",
-  "type": "library",
-  "license": "MIT",
+  "homepage": "https://jamesrweb.github.io/codewars-api-client",
   "keywords": [
     "codewars",
     "api-client"
   ],
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "name": "jamesrweb/codewars-api-client",
   "readme": "README.md",
-  "homepage": "https://jamesrweb.github.io/codewars-api-client",
   "repositories": [
     {
       "type": "composer",
@@ -19,47 +38,46 @@
       "url": "https://github.com/jamesrweb/codewars-api-client"
     }
   ],
-  "authors": [
-    {
-      "name": "James Robb",
-      "email": "james@jamesrobb.co.uk"
-    }
-  ],
-  "scripts": {
-    "lint": "phpstan analyse -c ./config/phpstan/phpstan.neon",
-    "format": "php-cs-fixer fix --config ./config/php-cs-fixer/.php_cs --using-cache no",
-    "start": "php -t public -S localhost:8080",
-    "test": "phpunit tests --testdox --configuration ./config/phpunit/phpunit.xml",
-    "test:watch": "phpunit-watcher watch tests --testdox --configuration phpunit.xml"
-  },
-  "minimum-stability": "stable",
   "require": {
+    "nyholm/psr7": "^1.4",
     "php": ">=8.0",
-    "symfony/http-client": "^5.2",
     "psr/http-client": "^1.0",
     "psr/http-message": "^1.0",
-    "nyholm/psr7": "^1.4",
+    "symfony/http-client": "^5.2",
     "thecodingmachine/safe": "^1.3"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.18",
+    "infection/infection": "^0.21.5",
+    "madewithlove/php-cs-fixer-config": "^2.0",
+    "nette/schema": "^1.2",
+    "phpstan/extension-installer": "^1.1",
+    "phpstan/phpstan": "^0.12.76",
+    "phpstan/phpstan-strict-rules": "^0.12.9",
     "phpunit/phpunit": "^9",
     "spatie/phpunit-watcher": "^1.23",
-    "friendsofphp/php-cs-fixer": "^2.18",
-    "madewithlove/php-cs-fixer-config": "^2.0",
-    "phpstan/phpstan": "^0.12.76",
-    "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan-strict-rules": "^0.12.9",
-    "nette/schema": "^1.2"
+    "thecodingmachine/phpstan-safe-rule": "^1.0"
   },
-  "autoload": {
-    "psr-4": {
-      "CodewarsApiClient\\": "src/"
-    }
+  "scripts": {
+    "ci": [
+      "composer run lint",
+      "composer run format",
+      "composer run test"
+    ],
+    "format": "php-cs-fixer fix --config ./config/php-cs-fixer/config.php",
+    "lint": "phpstan analyse -c ./config/phpstan/phpstan.neon",
+    "test": [
+      "composer run test:unit",
+      "composer run test:mutation"
+    ],
+    "test:mutation": [
+      "@putenv XDEBUG_MODE=coverage",
+      "infection --no-interaction --threads=4 --coverage=../../var/coverage/xml --configuration=./config/infection/config.json"
+    ],
+    "test:unit": [
+      "@putenv XDEBUG_MODE=coverage",
+      "phpunit tests --configuration ./config/php-unit/phpunit.xml"
+    ]
   },
-  "autoload-dev": {
-    "files": ["tests/Helpers/Regex.php"],
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  }
+  "type": "library"
 }
