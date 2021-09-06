@@ -1,6 +1,7 @@
 # Codewars API Client
 
 [![Test coverage](https://img.shields.io/badge/test%20coverage-100%25-brightgreen.svg)](https://github.com/jamesrweb/codewars-api-client)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fjamesrweb%2Fcodewars-api-client%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/jamesrweb/codewars-api-client/master)
 [![GitHub license](https://img.shields.io/github/license/jamesrweb/codewars-api-client.svg)](https://github.com/jamesrweb/codewars-api-client/blob/master/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/jamesrweb/codewars-api-client.svg)](https://GitHub.com/jamesrweb/codewars-api-client/graphs/contributors/)
 [![GitHub issues](https://img.shields.io/github/issues/jamesrweb/codewars-api-client.svg)](https://GitHub.com/jamesrweb/codewars-api-client/issues/)
