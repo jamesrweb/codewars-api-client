@@ -26,7 +26,8 @@ abstract class AbstractSchema implements SchemaInterface
     final public function validate(array $data): bool
     {
         try {
-            (new Processor())->process($this->schema(), $data);
+            $processor = new Processor();
+            $processor->process($this->schema(), $data);
 
             return true;
         } catch (ValidationException $e) {

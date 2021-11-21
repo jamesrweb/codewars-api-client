@@ -29,12 +29,14 @@ final class CompletedChallengesSchemaTest extends TestCase
     public function testValidateReturnsFalseWithMissingFields(): void
     {
         $completed = $this->responses->partial_completed_challenge();
+
         $this->assertFalse($this->schema->validate($completed));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $completed = $this->responses->valid_completed_challenge();
+
         $this->assertTrue($this->schema->validate($completed));
     }
 }

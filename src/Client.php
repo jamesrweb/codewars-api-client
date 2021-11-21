@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CodewarsApiClient;
 
 use CodewarsApiClient\Interfaces\ClientInterface as CodewarsApiClientInterface;
-use JsonException;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -21,14 +20,11 @@ final class Client implements CodewarsApiClientInterface
     private ClientInterface $psr18Client;
     private RequestFactoryInterface $psr17Factory;
 
-    public function __construct(
-        string $api_key,
-        ?ClientInterface $http_client = null,
-        ?RequestFactoryInterface $http_factory = null
-    ) {
+    public function __construct(string $api_key)
+    {
         $this->api_key = $api_key;
-        $this->psr18Client = $http_client ?? new Psr18Client();
-        $this->psr17Factory = $http_factory ?? new Psr17Factory();
+        $this->psr18Client = new Psr18Client();
+        $this->psr17Factory = new Psr17Factory();
     }
 
     /**
@@ -38,7 +34,7 @@ final class Client implements CodewarsApiClientInterface
     {
         $uri = "{$this->base_uri}/users/{$username}";
 
-        return $this->request('GET', $uri);
+        return $this->request('GET', $uri, []);
     }
 
     /**
@@ -47,7 +43,7 @@ final class Client implements CodewarsApiClientInterface
     public function authored(string $username): array
     {
         $uri = "{$this->base_uri}/users/{$username}/code-challenges/authored";
-        $data = $this->request('GET', $uri);
+        $data = $this->request('GET', $uri, []);
 
         return $data['data'];
     }
@@ -57,7 +53,7 @@ final class Client implements CodewarsApiClientInterface
      */
     public function completed(string $username): array
     {
-        return $this->completedPaginationHelper($username);
+        return $this->completedPaginationHelper($username, 1, []);
     }
 
     /**
@@ -67,7 +63,7 @@ final class Client implements CodewarsApiClientInterface
     {
         $uri = "{$this->base_uri}/code-challenges/{$id}";
 
-        return $this->request('GET', $uri);
+        return $this->request('GET', $uri, []);
     }
 
     /**
@@ -88,17 +84,17 @@ final class Client implements CodewarsApiClientInterface
      *
      * @return array<mixed>
      */
-    private function completedPaginationHelper(string $username, int $page = 1, array $output = []): array
+    private function completedPaginationHelper(string $username, int $page, array $output): array
     {
         $uri = "{$this->base_uri}/users/{$username}/code-challenges/completed";
         $data = $this->request('GET', $uri, ['page' => $page - 1]);
         $output = array_merge($output, $data['data']);
 
-        if ($page < $data['totalPages']) {
-            return $this->completedPaginationHelper($username, ++$page, $output);
+        if ($page >= $data['totalPages']) {
+            return $output;
         }
 
-        return $output;
+        return $this->completedPaginationHelper($username, $page + 1, $output);
     }
 
     /**
@@ -110,7 +106,7 @@ final class Client implements CodewarsApiClientInterface
      *
      * @return array<string, mixed>
      */
-    private function request(string $method, string $uri, array $query_params = []): array
+    private function request(string $method, string $uri, array $query_params): array
     {
         $query_string = http_build_query(data: $query_params, encoding_type: PHP_QUERY_RFC3986);
         $request_uri = "{$uri}?{$query_string}";
@@ -122,7 +118,7 @@ final class Client implements CodewarsApiClientInterface
 
         $response = $this->psr18Client->sendRequest($request);
 
-        return $response->getStatusCode() !== 404 ? $this->parse($response) : [];
+        return $this->parseJSONFromResponse($response);
     }
 
     /**
@@ -143,12 +139,18 @@ final class Client implements CodewarsApiClientInterface
      *
      * @return array<string, mixed>
      */
-    private function parse(ResponseInterface $response): array
+    private function parseJSONFromResponse(ResponseInterface $response): array
     {
-        try {
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (JsonException $e) {
+        if ($response->getStatusCode() === 404) {
             return [];
         }
+
+        $response_json = json_decode($response->getBody()->getContents(), true);
+
+        if (key_exists('success', $response_json) && $response_json['success'] === false) {
+            return [];
+        }
+
+        return $response_json;
     }
 }

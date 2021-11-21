@@ -29,18 +29,21 @@ final class ChallengeSchemaTest extends TestCase
     public function testValidateReturnsFalseWithEmptyArrayGiven(): void
     {
         $challenge = $this->responses->empty();
+
         $this->assertFalse($this->schema->validate($challenge));
     }
 
     public function testValidateReturnsFalseWithMissingFields(): void
     {
         $challenge = $this->responses->partial_challenge();
+
         $this->assertFalse($this->schema->validate($challenge));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $challenge = $this->responses->valid_challenge();
+
         $this->assertTrue($this->schema->validate($challenge));
     }
 }

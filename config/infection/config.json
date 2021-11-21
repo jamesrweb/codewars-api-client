@@ -15,17 +15,20 @@
     },
     "mutators": {
         "@default": true,
-        "Coalesce": false,
+        "ArrayItem": false,
+        "ArrayItemRemoval": false,
+        "ArrayOneItem": false,
         "DecrementInteger": false,
+        "Foreach_": false,
+        "GreaterThanOrEqualTo": false,
+        "GreaterThanOrEqualToNegotiation": false,
         "IncrementInteger": false,
         "Minus": false,
-        "ArrayItemRemoval": false,
-        "LessThanNegotiation": false,
-        "LessThan": false,
-        "Foreach_": false,
-        "UnwrapArrayMerge": false,
-        "ArrayOneItem": false,
-        "Increment": false
+        "NotIdentical": false,
+        "Plus": false,
+        "Ternary": false,
+        "UnwrapArrayMap": false,
+        "UnwrapArrayMerge": false
     },
     "tmpDir": "../../var/tmp",
     "phpUnit": {

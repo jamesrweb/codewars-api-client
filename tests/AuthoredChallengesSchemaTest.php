@@ -29,12 +29,14 @@ final class AuthoredChallengesSchemaTest extends TestCase
     public function testValidateReturnsFalseWithMissingFields(): void
     {
         $authored = $this->responses->partial_authored_challenge();
+
         $this->assertFalse($this->schema->validate($authored));
     }
 
     public function testValidateReturnsTrueWithAllFieldsGiven(): void
     {
         $authored = $this->responses->valid_authored_challenge();
+
         $this->assertTrue($this->schema->validate($authored));
     }
 }
