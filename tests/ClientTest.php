@@ -21,7 +21,8 @@ final class ClientTest extends TestCase
 {
     private ClientInterface $client;
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         $this->client = new Client($_ENV['CODEWARS_DUMMY_API_KEY']);
     }
 
@@ -71,15 +72,15 @@ final class ClientTest extends TestCase
     }
 
     public function testClientReturnsEmptyArrayWhen404(): void
-    {   
+    {
         $response = $this->client->user($_ENV['CODEWARS_INVALID_USERNAME']);
 
         $this->assertSame([], $response);
     }
 
     public function testClientReturnsEmptyArrayWhenResponseIsUnsuccessful(): void
-    {   
-        $response = $this->client->user("");
+    {
+        $response = $this->client->user('');
 
         $this->assertSame([], $response);
     }
